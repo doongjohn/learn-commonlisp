@@ -1,13 +1,23 @@
 ;;;; learn common lisp
 
+;;; comment style rules
 #|
-comment style rules
 https://stackoverflow.com/a/6365579
 https://www.gnu.org/software/emacs/manual/html_node/elisp/Comment-Tips.html
 |#
 
 ;;; tutorials
-;; https://www.youtube.com/watch?v=LqBbGFMPcDI
+#|
+https://www.youtube.com/watch?v=LqBbGFMPcDI
+https://cs.gmu.edu/~sean/lisp/LispTutorial.html
+https://github.com/rabbibotton/clog/blob/main/LEARN.md
+|#
+
+;;; libraries
+#|
+GUI library: https://codeberg.org/McCLIM/McCLIM
+Run external program: https://github.com/ruricolist/cmd
+|#
 
 ;;; global variable
 ;; https://stackoverflow.com/questions/8927741/whats-difference-between-defvar-defparameter-setf-and-setq
@@ -93,114 +103,116 @@ https://www.gnu.org/software/emacs/manual/html_node/elisp/Comment-Tips.html
 
   ;;; yes or no prompt
   (if (y-or-n-p "Do you like lisp?")
-        (format t "yay!~%")
-        (format t "sad...~%"))
-      (terpri)
+    (format t "yay!~%")
+    (format t "sad...~%"))
+  (terpri)
 
-      ;;; optional parameter with default value
-      (write-string "## optional parameter with default value")
-      (terpri)
-      (defun say-hello (&optional (name "John"))
-        (format t "Hello, ~a!~%" name))
+  ;;; optional parameter with default value
+  (write-string "## optional parameter with default value")
+  (terpri)
+  (defun say-hello (&optional (name "John"))
+    (format t "Hello, ~a!~%" name))
 
-      (say-hello)
-      (say-hello "동준")
+  (say-hello)
+  (say-hello "동준")
 
-      ;;; optional named parameter with default value
-      (write-string "## optional named parameter with default value")
-      (terpri)
-      (defun say-wow (&key (name "John"))
-        (format t "Wow, ~a!~%" name))
+  ;;; optional named parameter with default value
+  (write-string "## optional named parameter with default value")
+  (terpri)
+  (defun say-wow (&key (name "John"))
+    (format t "Wow, ~a!~%" name))
 
-      (say-wow)
-      (say-wow :name "동준")
-      (terpri)
+  (say-wow)
+  (say-wow :name "동준")
+  (terpri)
 
-      ;;; cons cell
-      (write-string "## cons cell")
-      (terpri)
-      (let ((a '(1 . 2)))
-        (format t "a => ~a~%" a)
-        (format t "(first a) => ~a~%" (first a))
-        (format t "(rest a) => ~a~%" (rest a)))
-      (terpri)
+  ;;; cons cell
+  (write-string "## cons cell")
+  (terpri)
+  (let ((a '(1 . 2)))
+    (format t "a => ~a~%" a)
+    (format t "(first a) => ~a~%" (first a))
+    (format t "(rest a) => ~a~%" (rest a)))
+  (terpri)
 
-      ;;; list
-      (write-string "## list")
-      (terpri)
-      (if (equal '(1 . (2 . (3 . (4)))) '(1 2 3 4))
-          (format t "it's same~%"))
-      (let ((a '(1 2 3 4)))
-        (format t "a => ~a~%" a)
-        (format t "(first a) => ~a~%" (first a))
-        (format t "(rest a) => ~a~%" (rest a)))
-      (terpri)
+  ;;; list
+  (write-string "## list")
+  (terpri)
+  (if (equal '(1 . (2 . (3 . (4)))) '(1 2 3 4))
+    (format t "it's same~%"))
+  (let ((a '(1 2 3 4)))
+    (format t "a => ~a~%" a)
+    (format t "(first a) => ~a~%" (first a))
+    (format t "(rest a) => ~a~%" (rest a)))
+  (terpri)
 
-      ;;; list index
-      (format t "index 2 = ~a~%" (nth 2 '(a b c d)))
-      ;                           ^^^^^ --> list index is zero based
-      (terpri)
+  ;;; list index
+  (format t "index 2 = ~a~%" (nth 2 '(a b c d)))
+  ;                           ^^^^^ --> list index is zero based
+  (terpri)
 
-      ;;; add item to list
-      (let ((a '(1 2)))
-        (push 0 a)
-        (setq a (append a '(3 4)))
-        (nconc a '(5))
-        (format t "~a~%" a))
-      (terpri)
+  ;;; add item to list
+  (let ((a '(1 2)))
+    (push 0 a)
+    (setq a (append a '(3 4)))
+    (nconc a '(5))
+    (format t "~a~%" a))
+  (terpri)
 
-      ;;; property list (plist)
-      (write-string "## property list")
-      (terpri)
-      (let ((person '(:name "Kate" :age 21)))
-        (format t "~a ~a~%" (getf person :name) (getf person :age)))
-      (terpri)
+  ;;; property list (plist)
+  (write-string "## property list")
+  (terpri)
+  (let ((person '(:name "Kate" :age 21)))
+    (format t "~a ~a~%" (getf person :name) (getf person :age)))
+  (terpri)
 
-      ;;; lambda
-      ;;; https://stackoverflow.com/a/13213772
-      (let ((fn (lambda () (format t "This is a lambda~%"))))
-        (funcall fn))
-      (terpri)
+  ;;; lambda
+  ;;; https://stackoverflow.com/a/13213772
+  (let ((fn (lambda () (format t "This is a lambda~%"))))
+    (funcall fn))
+  (terpri)
 
-      ;;; dotimes macro
-      (write-string "## dotimes macro")
-      (terpri)
-      (dotimes (i 10)
-        (format t "~a " i))
-      (terpri)
-      (let ((res (dotimes (i 10 "return value") (format t "~a " i))))
-        (format t "~%~a~%" res))
-      (terpri)
+  ;;; dotimes macro
+  (write-string "## dotimes macro")
+  (terpri)
+  (dotimes (i 10)
+    (format t "~a " i))
+  (terpri)
+  (let ((res (dotimes (i 10 "return value") (format t "~a " i))))
+    (format t "~%~a~%" res))
+  (terpri)
 
-      ;;; dolist macro
-      (write-string "## dolist macro")
-      (terpri)
-      (dolist (item '("hi" "yo" "cool"))
-        (format t "~a~%" item))
-      (terpri)
+  ;;; dolist macro
+  (write-string "## dolist macro")
+  (terpri)
+  (dolist (item '("hi" "yo" "cool"))
+    (format t "~a~%" item))
+  (terpri)
 
-      ;;; do macro
-      (write-string "## do macro")
-      (terpri)
-      (do ((i 0 (1+ i))
-           (j 0 (+ j 2)))
-          ((= i 3))
-        (format t "i = ~a, j = ~a~%" i j))
-      (terpri)
+  ;;; do macro
+  (write-string "## do macro")
+  (terpri)
+  (do ((i 0 (1+ i))
+       (j 0 (+ j 2)))
+      ((= i 3))
+    (format t "i = ~a, j = ~a~%" i j))
+  (terpri)
 
-      ;;; loop macro
-      ;; https://cl-cookbook.sourceforge.net/loop.html
-      (write-string "## loop macro")
-      (terpri)
-      (defun print-n (n str)
-        (loop :repeat n
-              :do (format t "~a~%" str)))
+  ;;; loop macro
+  ;; https://cl-cookbook.sourceforge.net/loop.html
+  (write-string "## loop macro")
+  (terpri)
+  (defun print-n (n str)
+    (loop :repeat n
+          :do (format t "~a~%" str)))
 
-      (print-n 3 "wow")
-      (terpri)
+  (print-n 3 "wow")
+  (terpri)
 
-      (loop for a in '(10 20 30)
-            for b in '(100 200 300)
-            do (format t "~a ~a~%" a b))
+  (loop for a in '(10 20 30)
+        for b in '(100 200 300)
+        do (format t "~a ~a~%" a b))
 
-      (exit))
+  ;;; TODO: learn about fraction
+
+  (exit))
