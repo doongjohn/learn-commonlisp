@@ -6,20 +6,23 @@ https://stackoverflow.com/a/6365579
 https://www.gnu.org/software/emacs/manual/html_node/elisp/Comment-Tips.html
 |#
 
+;;; tutorials
+;; https://www.youtube.com/watch?v=LqBbGFMPcDI
+
 ;;; global variable
 ;; https://stackoverflow.com/questions/8927741/whats-difference-between-defvar-defparameter-setf-and-setq
 (defparameter *some-global-var* "global var")
 (defconstant immutable-global-var "immutable")
 
 (defun main ()
-  (write-string "This is lisp!")
-  (write-string " Hi!")
+  (write-string "This is common-lisp!")
+  (write-string " Hello!")
   (write-char #\Newline *standard-output*)
   (terpri)
   (fresh-line)
 
   ;;; global variable
-  (write-string "# global string")
+  (write-string "## global string")
   (terpri)
   (format t "~a~%" *some-global-var*)
   (setf *some-global-var* "mutable")
@@ -27,8 +30,15 @@ https://www.gnu.org/software/emacs/manual/html_node/elisp/Comment-Tips.html
   (format t "~a~%" immutable-global-var)
   (terpri)
 
+  ;;; simple addition & subtraction
+  (format t "~a~%" (+ 1 2)) ; 3
+  (format t "~a~%" (+ 1 2 3)) ; 6
+  (format t "~a~%" (1+ 3)) ; 4
+  (format t "~a~%" (1- 3)) ; 2
+  (terpri)
+
   ;;; scoped variable
-  (write-string "# scoped variable")
+  (write-string "## scoped variable")
   (terpri)
   (let ((x 123)
         (y 456))
@@ -37,20 +47,14 @@ https://www.gnu.org/software/emacs/manual/html_node/elisp/Comment-Tips.html
   (terpri)
 
   ;;; named function
-  (write-string "# named function")
+  (write-string "## named function")
   (terpri)
   (defun add (a b)
     ;; function body
     (+ a b))
 
-  (format t "~a~%" (+ 1 2)) ; 3
-  (format t "~a~%" (+ 1 2 3)) ; 6
-  (format t "~a~%" (1+ 3)) ; 4
-  (format t "~a~%" (1- 3)) ; 2
-  (terpri)
-
   ;;; format string
-  (write-string "# format string")
+  (write-string "## format string")
   (terpri)
   (format t "1 + 2 = ~a~%" (add 1 2))
   ;                  ^^^^
@@ -61,13 +65,15 @@ https://www.gnu.org/software/emacs/manual/html_node/elisp/Comment-Tips.html
   ;          ^^^^^^^^^^^^ --> anything between ~:( and ~) gets converted to title case
 
   ;;; number formatting
+  (format t "~,2f~%" 0.3333) ; 0.33
+  (format t "~,3f~%" 0.3333) ; 0.333
   (format t "~r~%" 12) ; twelve
   (format t "~:r~%" 12) ; twelfth
   (format t "~@r~%" 12) ; XII
   (terpri)
 
   ;;; read line
-  (write-string "# read line from stdin")
+  (write-string "## read line")
   (terpri)
   (format t "What's your name? ")
   (finish-output) ; <-- https://stackoverflow.com/a/40985570
@@ -78,6 +84,13 @@ https://www.gnu.org/software/emacs/manual/html_node/elisp/Comment-Tips.html
     (sb-sys:interactive-interrupt () ; <-- ctrl-c
                                   (exit)))
 
+  ;;; read char
+  (write-string "## read char")
+  (terpri)
+  (let ((rune (read-char)))
+    (format t "rune: ~a~%" rune))
+  (terpri)
+
   ;;; yes or no prompt
   (if (y-or-n-p "Do you like lisp?")
         (format t "yay!~%")
@@ -85,7 +98,7 @@ https://www.gnu.org/software/emacs/manual/html_node/elisp/Comment-Tips.html
       (terpri)
 
       ;;; optional parameter with default value
-      (write-string "# optional parameter with default value")
+      (write-string "## optional parameter with default value")
       (terpri)
       (defun say-hello (&optional (name "John"))
         (format t "Hello, ~a!~%" name))
@@ -94,7 +107,7 @@ https://www.gnu.org/software/emacs/manual/html_node/elisp/Comment-Tips.html
       (say-hello "동준")
 
       ;;; optional named parameter with default value
-      (write-string "# optional named parameter with default value")
+      (write-string "## optional named parameter with default value")
       (terpri)
       (defun say-wow (&key (name "John"))
         (format t "Wow, ~a!~%" name))
@@ -104,7 +117,7 @@ https://www.gnu.org/software/emacs/manual/html_node/elisp/Comment-Tips.html
       (terpri)
 
       ;;; cons cell
-      (write-string "# cons cell")
+      (write-string "## cons cell")
       (terpri)
       (let ((a '(1 . 2)))
         (format t "a => ~a~%" a)
@@ -113,7 +126,7 @@ https://www.gnu.org/software/emacs/manual/html_node/elisp/Comment-Tips.html
       (terpri)
 
       ;;; list
-      (write-string "# list")
+      (write-string "## list")
       (terpri)
       (if (equal '(1 . (2 . (3 . (4)))) '(1 2 3 4))
           (format t "it's same~%"))
@@ -137,14 +150,20 @@ https://www.gnu.org/software/emacs/manual/html_node/elisp/Comment-Tips.html
       (terpri)
 
       ;;; property list (plist)
-      (write-string "# property list")
+      (write-string "## property list")
       (terpri)
       (let ((person '(:name "Kate" :age 21)))
         (format t "~a ~a~%" (getf person :name) (getf person :age)))
       (terpri)
 
+      ;;; lambda
+      ;;; https://stackoverflow.com/a/13213772
+      (let ((fn (lambda () (format t "This is a lambda~%"))))
+        (funcall fn))
+      (terpri)
+
       ;;; dotimes macro
-      (write-string "# dotimes macro")
+      (write-string "## dotimes macro")
       (terpri)
       (dotimes (i 10)
         (format t "~a " i))
@@ -154,14 +173,14 @@ https://www.gnu.org/software/emacs/manual/html_node/elisp/Comment-Tips.html
       (terpri)
 
       ;;; dolist macro
-      (write-string "# dolist macro")
+      (write-string "## dolist macro")
       (terpri)
       (dolist (item '("hi" "yo" "cool"))
         (format t "~a~%" item))
       (terpri)
 
       ;;; do macro
-      (write-string "# do macro")
+      (write-string "## do macro")
       (terpri)
       (do ((i 0 (1+ i))
            (j 0 (+ j 2)))
@@ -171,7 +190,7 @@ https://www.gnu.org/software/emacs/manual/html_node/elisp/Comment-Tips.html
 
       ;;; loop macro
       ;; https://cl-cookbook.sourceforge.net/loop.html
-      (write-string "# loop macro")
+      (write-string "## loop macro")
       (terpri)
       (defun print-n (n str)
         (loop :repeat n
