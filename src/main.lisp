@@ -32,8 +32,7 @@ Run external program: https://github.com/ruricolist/cmd
   (fresh-line)
 
   ;;; global variable
-  (write-string "## global string")
-  (terpri)
+  (write-line "## global string")
   (format t "~a~%" *some-global-var*)
   (setf *some-global-var* "mutable")
   (format t "~a~%" *some-global-var*)
@@ -48,8 +47,7 @@ Run external program: https://github.com/ruricolist/cmd
   (terpri)
 
   ;;; scoped variable
-  (write-string "## scoped variable")
-  (terpri)
+  (write-line "## scoped variable")
   (let ((x 123)
         (y 456))
     (format t "~a~%" x)
@@ -57,15 +55,13 @@ Run external program: https://github.com/ruricolist/cmd
   (terpri)
 
   ;;; named function
-  (write-string "## named function")
-  (terpri)
+  (write-line "## named function")
   (defun add (a b)
     ;; function body
     (+ a b))
 
   ;;; format string
-  (write-string "## format string")
-  (terpri)
+  (write-line "## format string")
   (format t "1 + 2 = ~a~%" (add 1 2))
   ;                  ^^^^
   ;                  │ └-> newline
@@ -83,8 +79,7 @@ Run external program: https://github.com/ruricolist/cmd
   (terpri)
 
   ;;; read line
-  (write-string "## read line")
-  (terpri)
+  (write-line "## read line")
   (format t "What's your name? ")
   (finish-output) ; <-- https://stackoverflow.com/a/40985570
   (handler-case ; <-- https://lispcookbook.github.io/cl-cookbook/error_handling.html
@@ -95,8 +90,7 @@ Run external program: https://github.com/ruricolist/cmd
                                   (exit)))
 
   ;;; read char
-  (write-string "## read char")
-  (terpri)
+  (write-line "## read char")
   (let ((rune (read-char)))
     (format t "rune: ~a~%" rune))
   (terpri)
@@ -108,8 +102,7 @@ Run external program: https://github.com/ruricolist/cmd
   (terpri)
 
   ;;; optional parameter with default value
-  (write-string "## optional parameter with default value")
-  (terpri)
+  (write-line "## optional parameter with default value")
   (defun say-hello (&optional (name "John"))
     (format t "Hello, ~a!~%" name))
 
@@ -117,8 +110,7 @@ Run external program: https://github.com/ruricolist/cmd
   (say-hello "동준")
 
   ;;; optional named parameter with default value
-  (write-string "## optional named parameter with default value")
-  (terpri)
+  (write-line "## optional named parameter with default value")
   (defun say-wow (&key (name "John"))
     (format t "Wow, ~a!~%" name))
 
@@ -127,8 +119,7 @@ Run external program: https://github.com/ruricolist/cmd
   (terpri)
 
   ;;; cons cell
-  (write-string "## cons cell")
-  (terpri)
+  (write-line "## cons cell")
   (let ((a '(1 . 2)))
     (format t "a => ~a~%" a)
     (format t "(first a) => ~a~%" (first a))
@@ -136,8 +127,7 @@ Run external program: https://github.com/ruricolist/cmd
   (terpri)
 
   ;;; list
-  (write-string "## list")
-  (terpri)
+  (write-line "## list")
   (if (equal '(1 . (2 . (3 . (4)))) '(1 2 3 4))
     (format t "it's same~%"))
   (let ((a '(1 2 3 4)))
@@ -160,8 +150,7 @@ Run external program: https://github.com/ruricolist/cmd
   (terpri)
 
   ;;; property list (plist)
-  (write-string "## property list")
-  (terpri)
+  (write-line "## property list")
   (let ((person '(:name "Kate" :age 21)))
     (format t "~a ~a~%" (getf person :name) (getf person :age)))
   (terpri)
@@ -173,8 +162,7 @@ Run external program: https://github.com/ruricolist/cmd
   (terpri)
 
   ;;; dotimes macro
-  (write-string "## dotimes macro")
-  (terpri)
+  (write-line "## dotimes macro")
   (dotimes (i 10)
     (format t "~a " i))
   (terpri)
@@ -183,15 +171,13 @@ Run external program: https://github.com/ruricolist/cmd
   (terpri)
 
   ;;; dolist macro
-  (write-string "## dolist macro")
-  (terpri)
+  (write-line "## dolist macro")
   (dolist (item '("hi" "yo" "cool"))
     (format t "~a~%" item))
   (terpri)
 
   ;;; do macro
-  (write-string "## do macro")
-  (terpri)
+  (write-line "## do macro")
   (do ((i 0 (1+ i))
        (j 0 (+ j 2)))
       ((= i 3))
@@ -200,19 +186,20 @@ Run external program: https://github.com/ruricolist/cmd
 
   ;;; loop macro
   ;; https://cl-cookbook.sourceforge.net/loop.html
-  (write-string "## loop macro")
-  (terpri)
+  (write-line "## loop macro")
   (defun print-n (n str)
-    (loop :repeat n
-          :do (format t "~a~%" str)))
+    (loop repeat n
+          do (format t "~a~%" str)))
 
   (print-n 3 "wow")
   (terpri)
 
   (loop for a in '(10 20 30)
-        for b in '(100 200 300)
+        for b in '(100 200 300 400)
         do (format t "~a ~a~%" a b))
 
   ;;; TODO: learn about fraction
+  ;;; TODO: learn about sequence
+  ;;; TODO: learn about defclass
 
   (exit))
