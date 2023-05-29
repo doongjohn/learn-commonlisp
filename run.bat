@@ -1,3 +1,3 @@
 @echo off
 
-sbcl --noinform --load src/main.lisp --eval "(main)"
+sbcl --noinform --non-interactive --load src/main.lisp --eval "(main)"

@@ -39,19 +39,25 @@ Run external program: https://github.com/ruricolist/cmd
   (format t "~a~%" immutable-global-var)
   (terpri)
 
-  ;;; simple addition & subtraction
-  (format t "~a~%" (+ 1 2)) ; 3
-  (format t "~a~%" (+ 1 2 3)) ; 6
-  (format t "~a~%" (1+ 3)) ; 4
-  (format t "~a~%" (1- 3)) ; 2
-  (terpri)
-
   ;;; scoped variable
   (write-line "## scoped variable")
   (let ((x 123)
         (y 456))
     (format t "~a~%" x)
     (format t "~a~%" y))
+  (terpri)
+
+  (let* ((x 10)
+         (y (+ x 10)))
+    (format t "~a~%" x)
+    (format t "~a~%" y))
+  (terpri)
+
+  ;;; simple addition & subtraction
+  (format t "~a~%" (+ 1 2)) ; 3
+  (format t "~a~%" (+ 1 2 3)) ; 6
+  (format t "~a~%" (1+ 3)) ; 4
+  (format t "~a~%" (1- 3)) ; 2
   (terpri)
 
   ;;; named function
@@ -167,7 +173,8 @@ Run external program: https://github.com/ruricolist/cmd
     (format t "~a " i))
   (terpri)
   (let ((res (dotimes (i 10 "return value") (format t "~a " i))))
-    (format t "~%~a~%" res))
+    (terpri)
+    (format t "res = ~a~%" res))
   (terpri)
 
   ;;; dolist macro
