@@ -23,56 +23,75 @@
 ;; - Run external program: https://github.com/ruricolist/cmd
 ;; - HTTP client: https://github.com/fukamachi/dexador
 
+(require 'term-color "src/term-color.lisp")
+
 ;;; global variable
 ;; https://stackoverflow.com/questions/8927741/whats-difference-between-defvar-defparameter-setf-and-setq
-(defparameter *some-global-var* "global var")
+(defvar *some-global-var* "global var")
 (defconstant immutable-global-var "immutable")
 
 (defun main ()
-  (write-string "This is common-lisp!")
-  (write-string " Hello!")
-  (write-char #\Newline *standard-output*)
+  (term-color:fmt-fg :blue "Let's learn Common-lisp!~%")
+  (write-string "Hello, World!")
+  (write-char #\Newline)
   (terpri)
-  (fresh-line)
 
-  (write-line "< global string >")
+  (term-color:fmt-fg :green "< global variable >~%")
   (format t "~a~%" *some-global-var*)
   (setf *some-global-var* "mutable")
-  (format t "~a~%" *some-global-var*)
-  (format t "~a~%" immutable-global-var)
+  (format t "*some-global-var* = ~a~%" *some-global-var*)
+  (format t "immutable-global-var = ~a~%" immutable-global-var)
   (terpri)
 
   ;;; scoped variable
-  (write-line "< scoped variable >")
+  (term-color:fmt-fg :green "< scoped variable >~%")
   (let ((x 123)
         (y 456))
-    (format t "~a~%" x)
-    (format t "~a~%" y))
+    (format t "x = ~a~%" x)
+    (format t "y = ~a~%" y))
   (terpri)
 
   (let* ((x 10)
          (y (+ x 10)))
-    (format t "~a~%" x)
-    (format t "~a~%" y))
+    (format t "x = ~a~%" x)
+    (format t "y = ~a~%" y))
   (terpri)
 
   ;;; named function
-  (write-line "< named function >")
-  (defun add (a b)
+  (term-color:fmt-fg :green "< named function >~%")
+  (defun append-digit (a b)
     ;; function body
-    (+ a b))
-  (format t "~a~%" (add 10 20))
+    (+ (* a (expt 10 (1- (truncate (log b))))) b))
+  (format t "~a~%" (append-digit 12 34))
   (terpri)
 
   ;;; anonymous function (lambda)
   ;; https://stackoverflow.com/a/13213772
-  (write-line "< anonymous function >")
+  (term-color:fmt-fg :green "< anonymous function >~%")
   (let ((fn #'(lambda () (format t "This is a lambda~%"))))
     (funcall fn))
   (terpri)
 
+  ;;; optional parameter with default value
+  (term-color:fmt-fg :green "< optional parameter with default value >~%")
+  (defun say-hello (&optional (name "John"))
+    (format t "Hello, ~a!~%" name))
+
+  (say-hello)
+  (say-hello "동준")
+  (terpri)
+
+  ;;; optional named parameter with default value
+  (term-color:fmt-fg :green "< optional named parameter with default value >~%")
+  (defun say-wow (&key (name "John") (age 10))
+    (format t "Wow, ~a ~a!~%" name age))
+
+  (say-wow)
+  (say-wow :name "동준" :age 24)
+  (terpri)
+
   ;;; simple addition & subtraction
-  (write-line "< addition & subtraction >")
+  (term-color:fmt-fg :green "< addition & subtraction >~%")
   (format t "~a~%" (+ 1 2)) ;; 3
   (format t "~a~%" (+ 1 2 3)) ;; 6
   (format t "~a~%" (1+ 3)) ;; 4
@@ -80,14 +99,14 @@
   (terpri)
 
   ;;; rational
-  (write-line "< rational >")
+  (term-color:fmt-fg :green "< rational >~%")
   (format t "~a~%" (/ 10 (/ 3 2))) ;; 20/3
   (format t "~a~%" (/ 10 (/ 2 3))) ;; 15
   (terpri)
 
   ;;; format string
-  (write-line "< format string >")
-  (format t "1 + 2 = ~a~%" (add 1 2))
+  (term-color:fmt-fg :green "< format string >~%")
+  (format t "1 + 2 = ~a~%" (+ 1 2))
   ;                  ^^^^
   ;                  │ └-> newline
   ;                  └---> next argument
@@ -104,7 +123,7 @@
   (terpri)
 
   ;;; read line
-  (write-line "< read line >")
+  (term-color:fmt-fg :green "< read line >~%")
   (format t "What's your name? ")
   (finish-output) ;; <-- https://stackoverflow.com/a/40985570
   (handler-case ;; <-- https://lispcookbook.github.io/cl-cookbook/error_handling.html
@@ -115,7 +134,7 @@
                                   (exit)))
 
   ;;; read char
-  (write-line "< read char >")
+  (term-color:fmt-fg :green "< read char >~%")
   (format t "char: ~a~%" (read-char))
   (terpri)
 
@@ -125,25 +144,8 @@
     (format t "sad...~%"))
   (terpri)
 
-  ;;; optional parameter with default value
-  (write-line "< optional parameter with default value >")
-  (defun say-hello (&optional (name "John"))
-    (format t "Hello, ~a!~%" name))
-
-  (say-hello)
-  (say-hello "동준")
-
-  ;;; optional named parameter with default value
-  (write-line "< optional named parameter with default value >")
-  (defun say-wow (&key (name "John") (age 10))
-    (format t "Wow, ~a ~a!~%" name age))
-
-  (say-wow)
-  (say-wow :name "동준" :age 24)
-  (terpri)
-
   ;;; cons cell
-  (write-line "< cons cell >")
+  (term-color:fmt-fg :green "< cons cell >~%")
   (let ((a '(1 . 2)))
     (format t "a => ~a~%" a)
     (format t "(first a) => ~a~%" (first a))
@@ -153,7 +155,7 @@
   ;;; list
   ;; '(a b c d) ; <-- quoted list does not evaluate items
   ;; (list a b c d) ; <-- list evaluates items
-  (write-line "< list >")
+  (term-color:fmt-fg :green "< list >~%")
   (if (equal '(1 . (2 . (3 . (4)))) '(1 2 3 4))
     (format t "it's same~%"))
   (let ((a '(1 2 3 4)))
@@ -176,7 +178,7 @@
   (terpri)
 
   ;;; property list (plist)
-  (write-line "< property list >")
+  (term-color:fmt-fg :green "< property list >~%")
   (let ((person '(:name "Kate" :age 21)))
     (format t "~a ~a~%" (getf person :name) (getf person :age)))
   (terpri)
@@ -184,19 +186,19 @@
   ;;; vector
   ;; https://gigamonkeys.com/book/collections.html
   ;; https://lispcookbook.github.io/cl-cookbook/arrays.html
-  (write-line "< vector >")
-  (let ((arr1 (make-array 5 :initial-element 0))
-        (arr2 #(1 2 3)))
-    (format t "arr1 length: ~a~%" (length arr1))
-    (format t "arr1 = ~a~%" arr1)
-    (setf (elt arr1 0) 100)
-    (setf (elt arr1 1) 200)
-    (format t "arr1 = ~a~%" arr1)
-    (format t "arr2 = ~a~%" arr2))
+  (term-color:fmt-fg :green "< vector >~%")
+  (let ((vec1 (make-array 5 :initial-element 0))
+        (vec2 #(1 2 3)))
+    (format t "vec1 length: ~a~%" (length vec1))
+    (format t "vec1 = ~a~%" vec1)
+    (setf (elt vec1 0) 100)
+    (setf (elt vec1 1) 200)
+    (format t "vec1 = ~a~%" vec1)
+    (format t "vec2 = ~a~%" vec2))
   (terpri)
 
   ;;; dotimes macro
-  (write-line "< dotimes macro >")
+  (term-color:fmt-fg :green "< dotimes macro >~%")
   (dotimes (i 10)
     (format t "~a " i))
   (terpri)
@@ -206,13 +208,13 @@
   (terpri)
 
   ;;; dolist macro
-  (write-line "< dolist macro >")
+  (term-color:fmt-fg :green "< dolist macro >~%")
   (dolist (item '("hi" "yo" "cool"))
     (format t "~a~%" item))
   (terpri)
 
   ;;; do macro
-  (write-line "< do macro >")
+  (term-color:fmt-fg :green "< do macro >~%")
   (do ((i 0 (1+ i))
        (j 0 (+ j 2)))
       ((= i 3))
@@ -222,24 +224,28 @@
   ;;; loop macro
   ;; https://cl-cookbook.sourceforge.net/loop.html
   ;; https://lispcookbook.github.io/cl-cookbook/iteration.html
-  (write-line "< loop macro >")
-  (defun print-ntimes (n str)
+  (term-color:fmt-fg :green "< loop macro >~%")
+  (defun print-repeat (n str)
     (loop :repeat n
           :do (format t "~a~%" str)))
 
-  (print-ntimes 3 "wow")
+  (print-repeat 3 "wow")
   (terpri)
 
   (loop :for i :from 10 :downto 1
         :do (format t "~a " i))
   (finish-output)
-  (terpri)
-  (terpri)
+  (dotimes (_ 2) (terpri))
 
   (loop :for a :in '(10 20 30)
         :for b :in '(100 200 300 400)
         :do (format t "~a ~a~%" a b))
   (terpri)
+
+  (loop :for item :across #(1 2 3 4)
+        :do (format t "~a " item))
+  (finish-output)
+  (dotimes (_ 2) (terpri))
 
   (loop :with a = 1
         :with b = 10
