@@ -90,6 +90,17 @@
   (say-wow :name "동준" :age 24)
   (terpri)
 
+  ;;; function pointer
+  (term-color:fmt-fg :green "< function pointer >~%")
+  (defun haha () (write-line "haha"))
+  (defun hoho () (write-line "hoho"))
+  (let ((haha-ptr (function haha))
+        (hoho-ptr #'hoho))
+        ;         ^^^^^^ --> same as (function hoho)
+    (funcall haha-ptr)
+    (funcall hoho-ptr))
+  (terpri)
+
   ;;; simple addition & subtraction
   (term-color:fmt-fg :green "< addition & subtraction >~%")
   (format t "(+ 1 2) => ~a~%" (+ 1 2)) ;; 3
