@@ -27,8 +27,8 @@
 
 ;;; global variable
 ;; https://stackoverflow.com/questions/8927741/whats-difference-between-defvar-defparameter-setf-and-setq
-(defvar *global-var* "global var")
-(defconstant immutable-global-var "immutable")
+(defparameter *global-var* "global var")
+(defconstant +immutable-global-var+ "immutable")
 
 (defun main ()
   (term-color:fmt-fg :blue "Let's learn Common-lisp!~%")
@@ -40,7 +40,7 @@
   (format t "*global-var* = ~a~%" *global-var*)
   (setf *global-var* "mutable")
   (format t "*global-var* = ~a~%" *global-var*)
-  (format t "immutable-global-var = ~a~%" immutable-global-var)
+  (format t "+immutable-global-var+ = ~a~%" +immutable-global-var+)
   (terpri)
 
   ;;; scoped variable
@@ -92,10 +92,10 @@
 
   ;;; simple addition & subtraction
   (term-color:fmt-fg :green "< addition & subtraction >~%")
-  (format t "~a~%" (+ 1 2)) ;; 3
-  (format t "~a~%" (+ 1 2 3)) ;; 6
-  (format t "~a~%" (1+ 3)) ;; 4
-  (format t "~a~%" (1- 3)) ;; 2
+  (format t "(+ 1 2) => ~a~%" (+ 1 2)) ;; 3
+  (format t "(+ 1 2 3) => ~a~%" (+ 1 2 3)) ;; 6
+  (format t "(1+ 3) => ~a~%" (1+ 3)) ;; 4
+  (format t "(1- 3) => ~a~%" (1- 3)) ;; 2
   (terpri)
 
   ;;; rational
@@ -195,6 +195,23 @@
     (setf (elt vec1 1) 200)
     (format t "vec1 = ~a~%" vec1)
     (format t "vec2 = ~a~%" vec2))
+  (terpri)
+
+  (let ((vec (make-array 5 :initial-contents #(1 2 3 4 5))))
+    (rotatef (elt vec 0) (elt vec 1) (elt vec 2))
+    (format t "~a~%" vec))
+  (terpri)
+
+  (term-color:fmt-fg :green "< multidimentional vector >~%")
+  (let ((grid (make-array '(5 5))))
+    (setf grid #2A((1 2 3 4 5)
+                   (1 2 3 4 5)
+                   (1 2 3 4 5)
+                   (1 2 3 4 5)
+                   (1 2 3 4 5)))
+    (format t "grid = ~a~%" grid)
+    (format t "grid[2][3] = ~a~%" (aref grid 2 3)))
+    ;                              ^^^^^^^^^^^^^ --> row major indexing
   (terpri)
 
   ;;; dotimes macro
