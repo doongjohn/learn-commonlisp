@@ -27,7 +27,7 @@
 
 ;;; global variable
 ;; https://stackoverflow.com/questions/8927741/whats-difference-between-defvar-defparameter-setf-and-setq
-(defvar *some-global-var* "global var")
+(defvar *global-var* "global var")
 (defconstant immutable-global-var "immutable")
 
 (defun main ()
@@ -37,9 +37,9 @@
   (terpri)
 
   (term-color:fmt-fg :green "< global variable >~%")
-  (format t "~a~%" *some-global-var*)
-  (setf *some-global-var* "mutable")
-  (format t "*some-global-var* = ~a~%" *some-global-var*)
+  (format t "*global-var* = ~a~%" *global-var*)
+  (setf *global-var* "mutable")
+  (format t "*global-var* = ~a~%" *global-var*)
   (format t "immutable-global-var = ~a~%" immutable-global-var)
   (terpri)
 
@@ -147,7 +147,7 @@
   ;;; cons cell
   (term-color:fmt-fg :green "< cons cell >~%")
   (let ((a '(1 . 2)))
-    (format t "a => ~a~%" a)
+    (format t "a = ~a~%" a)
     (format t "(first a) => ~a~%" (first a))
     (format t "(rest a) => ~a~%" (rest a)))
   (terpri)
@@ -157,16 +157,16 @@
   ;; (list a b c d) ; <-- list evaluates items
   (term-color:fmt-fg :green "< list >~%")
   (if (equal '(1 . (2 . (3 . (4)))) '(1 2 3 4))
-    (format t "it's same~%"))
+    (format t "'(1 . (2 . (3 . (4)))) == '(1 2 3 4)~%"))
   (let ((a '(1 2 3 4)))
-    (format t "a => ~a~%" a)
+    (format t "a = ~a~%" a)
     (format t "(first a) => ~a~%" (first a))
     (format t "(rest a) => ~a~%" (rest a)))
   (terpri)
 
   ;;; list index
-  (format t "index 2 = ~a~%" (nth 2 '(a b c d)))
-  ;                           ^^^^^ --> list index is zero based
+  (format t "index 2 of '(a b c d) => ~a~%" (nth 2 '(a b c d)))
+  ;                                          ^^^^^ --> list index is zero based
   (terpri)
 
   ;;; add item to list
