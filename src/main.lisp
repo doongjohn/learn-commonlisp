@@ -1,6 +1,7 @@
 ;;;; Learn Common Lisp
 
 ;;; TODO:
+;;; - learn equalp
 ;;; - learn error handling
 ;;;   https://gigamonkeys.com/book/beyond-exception-handling-conditions-and-restarts.html
 ;;; - learn defstruct
@@ -20,6 +21,7 @@
 ;;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Comment-Tips.html
 
 ;;; Libraries
+;;; - Concurrency: https://www.cliki.net/concurrency
 ;;; - Static typing: https://github.com/coalton-lang/coalton
 ;;; - Pattern matching: https://github.com/guicho271828/trivia
 ;;; - Regular expression: https://github.com/telekons/one-more-re-nightmare
