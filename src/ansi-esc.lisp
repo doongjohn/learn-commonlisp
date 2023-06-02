@@ -1,4 +1,4 @@
-(defpackage #:term-color
+(defpackage #:ansi-esc
   (:use
    #:cl)
   (:export
@@ -7,7 +7,7 @@
    #:fmt-fg   ; macro
   ))
 
-(in-package #:term-color)
+(in-package #:ansi-esc)
 
 ;; https://en.wikipedia.org/wiki/ANSI_escape_code
 ;; https://gist.github.com/JBlond/2fea43a3049b38287e5e9cefc87b2124

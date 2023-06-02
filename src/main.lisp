@@ -26,7 +26,7 @@
 ;;; - Run external program: https://github.com/ruricolist/cmd
 ;;; - HTTP client: https://github.com/fukamachi/dexador
 
-(require 'term-color "src/term-color.lisp")
+(require 'ansi-esc "src/ansi-esc.lisp")
 
 ;; global variable
 ;; https://stackoverflow.com/questions/8927741/whats-difference-between-defvar-defparameter-setf-and-setq
@@ -34,12 +34,12 @@
 (defconstant +immutable-global-var+ "immutable")
 
 (defun main ()
-  (term-color:fmt-fg :blue "Let's learn Common-lisp!~%")
+  (ansi-esc:fmt-fg :blue "Let's learn Common Lisp!~%")
   (write-string "Hello, World!")
   (write-char #\Newline)
   (terpri)
 
-  (term-color:fmt-fg :green "< global variable >~%")
+  (ansi-esc:fmt-fg :green "< global variable >~%")
   (format t "*global-var* = ~a~%" *global-var*)
   (setf *global-var* "mutable")
   (format t "*global-var* = ~a~%" *global-var*)
@@ -47,7 +47,7 @@
   (terpri)
 
   ;; scoped variable
-  (term-color:fmt-fg :green "< scoped variable >~%")
+  (ansi-esc:fmt-fg :green "< scoped variable >~%")
   (let ((x 123)
         (y 456))
     (format t "x = ~a~%" x)
@@ -61,7 +61,7 @@
   (terpri)
 
   ;; named function
-  (term-color:fmt-fg :green "< named function >~%")
+  (ansi-esc:fmt-fg :green "< named function >~%")
   (defun append-digit (a b)
     ;; function body
     (+ (* a (expt 10 (1- (truncate (log b))))) b))
@@ -70,13 +70,13 @@
 
   ;; anonymous function (lambda)
   ;; https://stackoverflow.com/a/13213772
-  (term-color:fmt-fg :green "< anonymous function >~%")
+  (ansi-esc:fmt-fg :green "< anonymous function >~%")
   (let ((fn #'(lambda () (format t "This is a lambda~%"))))
     (funcall fn))
   (terpri)
 
   ;; optional parameter with default value
-  (term-color:fmt-fg :green "< optional parameter with default value >~%")
+  (ansi-esc:fmt-fg :green "< optional parameter with default value >~%")
   (defun say-hello (&optional (name "John"))
     (format t "Hello, ~a!~%" name))
 
@@ -85,7 +85,7 @@
   (terpri)
 
   ;; optional named parameter with default value
-  (term-color:fmt-fg :green "< optional named parameter with default value >~%")
+  (ansi-esc:fmt-fg :green "< optional named parameter with default value >~%")
   (defun say-wow (&key (name "John") (age 10))
     (format t "Wow, ~a ~a!~%" name age))
 
@@ -94,7 +94,7 @@
   (terpri)
 
   ;; function pointer
-  (term-color:fmt-fg :green "< function pointer >~%")
+  (ansi-esc:fmt-fg :green "< function pointer >~%")
   (defun haha () (write-line "haha"))
   (defun hoho () (write-line "hoho"))
   (let ((haha-ptr (function haha))
@@ -105,7 +105,7 @@
   (terpri)
 
   ;; simple addition & subtraction
-  (term-color:fmt-fg :green "< addition & subtraction >~%")
+  (ansi-esc:fmt-fg :green "< addition & subtraction >~%")
   (format t "(+ 1 2) => ~a~%" (+ 1 2)) ;; 3
   (format t "(+ 1 2 3) => ~a~%" (+ 1 2 3)) ;; 6
   (format t "(1+ 3) => ~a~%" (1+ 3)) ;; 4
@@ -113,13 +113,13 @@
   (terpri)
 
   ;; rational
-  (term-color:fmt-fg :green "< rational >~%")
+  (ansi-esc:fmt-fg :green "< rational >~%")
   (format t "~a~%" (/ 10 (/ 3 2))) ;; 20/3
   (format t "~a~%" (/ 10 (/ 2 3))) ;; 15
   (terpri)
 
   ;; format string
-  (term-color:fmt-fg :green "< format string >~%")
+  (ansi-esc:fmt-fg :green "< format string >~%")
   (format t "1 + 2 = ~a~%" (+ 1 2))
   ;                  ^^^^
   ;                  │ └-> newline
@@ -137,7 +137,7 @@
   (terpri)
 
   ;; read line
-  (term-color:fmt-fg :green "< read line >~%")
+  (ansi-esc:fmt-fg :green "< read line >~%")
   (format t "What's your name? ")
   (finish-output) ;; <-- https://stackoverflow.com/a/40985570
   (handler-case ;; <-- https://lispcookbook.github.io/cl-cookbook/error_handling.html
@@ -148,7 +148,7 @@
                                   (exit)))
 
   ;; read char
-  (term-color:fmt-fg :green "< read char >~%")
+  (ansi-esc:fmt-fg :green "< read char >~%")
   (format t "char: ~a~%" (read-char))
   (terpri)
 
@@ -159,7 +159,7 @@
   (terpri)
 
   ;; cons cell
-  (term-color:fmt-fg :green "< cons cell >~%")
+  (ansi-esc:fmt-fg :green "< cons cell >~%")
   (let ((a '(1 . 2)))
     (format t "a = ~a~%" a)
     (format t "(first a) => ~a~%" (first a))
@@ -169,7 +169,7 @@
   ;; list
   ;; '(a b c d) ; <-- quoted list does not evaluate items
   ;; (list a b c d) ; <-- list evaluates items
-  (term-color:fmt-fg :green "< list >~%")
+  (ansi-esc:fmt-fg :green "< list >~%")
   (if (equal '(1 . (2 . (3 . (4)))) '(1 2 3 4))
     (format t "'(1 . (2 . (3 . (4)))) == '(1 2 3 4)~%"))
   (let ((a '(1 2 3 4)))
@@ -192,7 +192,7 @@
   (terpri)
 
   ;; property list (plist)
-  (term-color:fmt-fg :green "< property list >~%")
+  (ansi-esc:fmt-fg :green "< property list >~%")
   (let ((person '(:name "Kate" :age 21)))
     (format t "~a ~a~%" (getf person :name) (getf person :age)))
   (terpri)
@@ -200,7 +200,7 @@
   ;; vector
   ;; https://gigamonkeys.com/book/collections.html
   ;; https://lispcookbook.github.io/cl-cookbook/arrays.html
-  (term-color:fmt-fg :green "< vector >~%")
+  (ansi-esc:fmt-fg :green "< vector >~%")
   (let ((vec1 (make-array 5 :initial-element 0))
         (vec2 #(1 2 3)))
     (format t "vec1 length: ~a~%" (length vec1))
@@ -216,7 +216,7 @@
     (format t "~a~%" vec))
   (terpri)
 
-  (term-color:fmt-fg :green "< multidimentional vector >~%")
+  (ansi-esc:fmt-fg :green "< multidimentional vector >~%")
   (let ((grid (make-array '(5 5))))
     (setf grid #2A((1 2 3 4 5)
                    (1 2 3 4 5)
@@ -229,7 +229,7 @@
   (terpri)
 
   ;; dotimes macro
-  (term-color:fmt-fg :green "< dotimes macro >~%")
+  (ansi-esc:fmt-fg :green "< dotimes macro >~%")
   (dotimes (i 10)
     (format t "~a " i))
   (terpri)
@@ -239,13 +239,13 @@
   (terpri)
 
   ;; dolist macro
-  (term-color:fmt-fg :green "< dolist macro >~%")
+  (ansi-esc:fmt-fg :green "< dolist macro >~%")
   (dolist (item '("hi" "yo" "cool"))
     (format t "~a~%" item))
   (terpri)
 
   ;; do macro
-  (term-color:fmt-fg :green "< do macro >~%")
+  (ansi-esc:fmt-fg :green "< do macro >~%")
   (do ((i 0 (1+ i))
        (j 0 (+ j 2)))
       ((= i 3))
@@ -255,7 +255,7 @@
   ;; loop macro
   ;; https://cl-cookbook.sourceforge.net/loop.html
   ;; https://lispcookbook.github.io/cl-cookbook/iteration.html
-  (term-color:fmt-fg :green "< loop macro >~%")
+  (ansi-esc:fmt-fg :green "< loop macro >~%")
   (defun print-repeat (n str)
     (loop :repeat n
           :do (format t "~a~%" str)))
