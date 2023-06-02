@@ -22,7 +22,9 @@
 
 ;;; Libraries
 ;;; - Concurrency: https://www.cliki.net/concurrency
-;;; - Static typing: https://github.com/coalton-lang/coalton
+;;; - Static typing:
+;;;   - https://github.com/coalton-lang/coalton
+;;;   - https://lisp-journey.gitlab.io/blog/compile-time-type-checking-in-common-lisp
 ;;; - Pattern matching: https://github.com/guicho271828/trivia
 ;;; - Regular expression: https://github.com/telekons/one-more-re-nightmare
 ;;; - Run external program: https://github.com/ruricolist/cmd
