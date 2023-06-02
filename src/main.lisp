@@ -1,31 +1,34 @@
-;;;; learn common lisp
+;;;; Learn Common Lisp
 
 ;;; TODO:
-;; - learn error handling
-;;   https://gigamonkeys.com/book/beyond-exception-handling-conditions-and-restarts.html
-;; - learn defclass
-;; - learn type system
-;;   https://lispcookbook.github.io/cl-cookbook/type.html
-;; - learn macro
+;;; - learn error handling
+;;;   https://gigamonkeys.com/book/beyond-exception-handling-conditions-and-restarts.html
+;;; - learn defstruct
+;;; - learn defclass
+;;; - learn type system
+;;;   https://lispcookbook.github.io/cl-cookbook/type.html
+;;; - learn macro
 
-;;; tutorials
-;; https://www.youtube.com/watch?v=LqBbGFMPcDI
-;; https://cs.gmu.edu/~sean/lisp/LispTutorial.html
-;; https://github.com/rabbibotton/clog/blob/main/LEARN.md
-;; https://gigamonkeys.com/book/
+;;; Tutorials
+;;; https://www.youtube.com/watch?v=LqBbGFMPcDI
+;;; https://cs.gmu.edu/~sean/lisp/LispTutorial.html
+;;; https://github.com/rabbibotton/clog/blob/main/LEARN.md
+;;; https://gigamonkeys.com/book/
 
-;;; comment style rules
-;; https://stackoverflow.com/a/6365579
-;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Comment-Tips.html
+;;; Comment style rules
+;;; https://stackoverflow.com/a/6365579
+;;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Comment-Tips.html
 
-;;; libraries
-;; - Regular expression: https://github.com/telekons/one-more-re-nightmare
-;; - Run external program: https://github.com/ruricolist/cmd
-;; - HTTP client: https://github.com/fukamachi/dexador
+;;; Libraries
+;;; - Static typing: https://github.com/coalton-lang/coalton
+;;; - Pattern matching: https://github.com/guicho271828/trivia
+;;; - Regular expression: https://github.com/telekons/one-more-re-nightmare
+;;; - Run external program: https://github.com/ruricolist/cmd
+;;; - HTTP client: https://github.com/fukamachi/dexador
 
 (require 'term-color "src/term-color.lisp")
 
-;;; global variable
+;; global variable
 ;; https://stackoverflow.com/questions/8927741/whats-difference-between-defvar-defparameter-setf-and-setq
 (defparameter *global-var* "global var")
 (defconstant +immutable-global-var+ "immutable")
@@ -43,7 +46,7 @@
   (format t "+immutable-global-var+ = ~a~%" +immutable-global-var+)
   (terpri)
 
-  ;;; scoped variable
+  ;; scoped variable
   (term-color:fmt-fg :green "< scoped variable >~%")
   (let ((x 123)
         (y 456))
@@ -57,7 +60,7 @@
     (format t "y = ~a~%" y))
   (terpri)
 
-  ;;; named function
+  ;; named function
   (term-color:fmt-fg :green "< named function >~%")
   (defun append-digit (a b)
     ;; function body
@@ -65,14 +68,14 @@
   (format t "~a~%" (append-digit 12 34))
   (terpri)
 
-  ;;; anonymous function (lambda)
+  ;; anonymous function (lambda)
   ;; https://stackoverflow.com/a/13213772
   (term-color:fmt-fg :green "< anonymous function >~%")
   (let ((fn #'(lambda () (format t "This is a lambda~%"))))
     (funcall fn))
   (terpri)
 
-  ;;; optional parameter with default value
+  ;; optional parameter with default value
   (term-color:fmt-fg :green "< optional parameter with default value >~%")
   (defun say-hello (&optional (name "John"))
     (format t "Hello, ~a!~%" name))
@@ -81,7 +84,7 @@
   (say-hello "동준")
   (terpri)
 
-  ;;; optional named parameter with default value
+  ;; optional named parameter with default value
   (term-color:fmt-fg :green "< optional named parameter with default value >~%")
   (defun say-wow (&key (name "John") (age 10))
     (format t "Wow, ~a ~a!~%" name age))
@@ -90,7 +93,7 @@
   (say-wow :name "동준" :age 24)
   (terpri)
 
-  ;;; function pointer
+  ;; function pointer
   (term-color:fmt-fg :green "< function pointer >~%")
   (defun haha () (write-line "haha"))
   (defun hoho () (write-line "hoho"))
@@ -101,7 +104,7 @@
     (funcall hoho-ptr))
   (terpri)
 
-  ;;; simple addition & subtraction
+  ;; simple addition & subtraction
   (term-color:fmt-fg :green "< addition & subtraction >~%")
   (format t "(+ 1 2) => ~a~%" (+ 1 2)) ;; 3
   (format t "(+ 1 2 3) => ~a~%" (+ 1 2 3)) ;; 6
@@ -109,13 +112,13 @@
   (format t "(1- 3) => ~a~%" (1- 3)) ;; 2
   (terpri)
 
-  ;;; rational
+  ;; rational
   (term-color:fmt-fg :green "< rational >~%")
   (format t "~a~%" (/ 10 (/ 3 2))) ;; 20/3
   (format t "~a~%" (/ 10 (/ 2 3))) ;; 15
   (terpri)
 
-  ;;; format string
+  ;; format string
   (term-color:fmt-fg :green "< format string >~%")
   (format t "1 + 2 = ~a~%" (+ 1 2))
   ;                  ^^^^
@@ -125,7 +128,7 @@
   (format t "~:(~a, ~a!~)~%" "hello" "world")
   ;          ^^^^^^^^^^^^ --> anything between ~:( and ~) gets converted to title case
 
-  ;;; number formatting
+  ;; number formatting
   (format t "~,2f~%" 0.3333) ;; 0.33
   (format t "~,3f~%" 0.3333) ;; 0.333
   (format t "~r~%" 12) ;; twelve
@@ -133,7 +136,7 @@
   (format t "~@r~%" 12) ;; XII
   (terpri)
 
-  ;;; read line
+  ;; read line
   (term-color:fmt-fg :green "< read line >~%")
   (format t "What's your name? ")
   (finish-output) ;; <-- https://stackoverflow.com/a/40985570
@@ -144,18 +147,18 @@
     (sb-sys:interactive-interrupt () ;; <-- ctrl-c
                                   (exit)))
 
-  ;;; read char
+  ;; read char
   (term-color:fmt-fg :green "< read char >~%")
   (format t "char: ~a~%" (read-char))
   (terpri)
 
-  ;;; yes or no prompt
+  ;; yes or no prompt
   (if (y-or-n-p "Do you like lisp?")
     (format t "yay!~%")
     (format t "sad...~%"))
   (terpri)
 
-  ;;; cons cell
+  ;; cons cell
   (term-color:fmt-fg :green "< cons cell >~%")
   (let ((a '(1 . 2)))
     (format t "a = ~a~%" a)
@@ -163,7 +166,7 @@
     (format t "(rest a) => ~a~%" (rest a)))
   (terpri)
 
-  ;;; list
+  ;; list
   ;; '(a b c d) ; <-- quoted list does not evaluate items
   ;; (list a b c d) ; <-- list evaluates items
   (term-color:fmt-fg :green "< list >~%")
@@ -175,12 +178,12 @@
     (format t "(rest a) => ~a~%" (rest a)))
   (terpri)
 
-  ;;; list index
+  ;; list index
   (format t "index 2 of '(a b c d) => ~a~%" (nth 2 '(a b c d)))
   ;                                          ^^^^^ --> list index is zero based
   (terpri)
 
-  ;;; add item to list
+  ;; add item to list
   (let ((a '(1 2)))
     (push 0 a)
     (setf a (append a '(3 4)))
@@ -188,13 +191,13 @@
     (format t "~a~%" a))
   (terpri)
 
-  ;;; property list (plist)
+  ;; property list (plist)
   (term-color:fmt-fg :green "< property list >~%")
   (let ((person '(:name "Kate" :age 21)))
     (format t "~a ~a~%" (getf person :name) (getf person :age)))
   (terpri)
 
-  ;;; vector
+  ;; vector
   ;; https://gigamonkeys.com/book/collections.html
   ;; https://lispcookbook.github.io/cl-cookbook/arrays.html
   (term-color:fmt-fg :green "< vector >~%")
@@ -225,7 +228,7 @@
     ;                              ^^^^^^^^^^^^^ --> row major indexing
   (terpri)
 
-  ;;; dotimes macro
+  ;; dotimes macro
   (term-color:fmt-fg :green "< dotimes macro >~%")
   (dotimes (i 10)
     (format t "~a " i))
@@ -235,13 +238,13 @@
     (format t "res = ~a~%" res))
   (terpri)
 
-  ;;; dolist macro
+  ;; dolist macro
   (term-color:fmt-fg :green "< dolist macro >~%")
   (dolist (item '("hi" "yo" "cool"))
     (format t "~a~%" item))
   (terpri)
 
-  ;;; do macro
+  ;; do macro
   (term-color:fmt-fg :green "< do macro >~%")
   (do ((i 0 (1+ i))
        (j 0 (+ j 2)))
@@ -249,7 +252,7 @@
     (format t "i = ~a, j = ~a~%" i j))
   (terpri)
 
-  ;;; loop macro
+  ;; loop macro
   ;; https://cl-cookbook.sourceforge.net/loop.html
   ;; https://lispcookbook.github.io/cl-cookbook/iteration.html
   (term-color:fmt-fg :green "< loop macro >~%")
