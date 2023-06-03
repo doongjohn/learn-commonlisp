@@ -3,8 +3,10 @@
    #:cl)
   (:export
    #:fg-set   ; function
+   #:bg-set   ; function
    #:fg-reset ; function
-   #:fmt-fg   ; macro
+   #:bg-reset ; function
+   #:fmt      ; macro
   ))
 
 (in-package #:ansi-esc)
@@ -24,12 +26,22 @@
 (defun fg-set (color-name)
   (format t "~a[~am" #\Esc (+ 30 (getf +colors+ color-name))))
 
+(defun bg-set (color-name)
+  (format t "~a[~am" #\Esc (+ 40 (getf +colors+ color-name))))
+
 (defun fg-reset ()
   (fg-set :default)
   (finish-output))
 
-(defmacro fmt-fg (color-name fmt-string &rest args)
+(defun bg-reset ()
+  (bg-set :default)
+  (finish-output))
+
+(defmacro fmt ((&key (fg :default) (bg :default)) fmt-string &rest args)
   `(progn
-    (fg-set ,color-name)
+    (fg-set ,fg)
+    (bg-set ,bg)
     (apply #'format t ,fmt-string ,args)
-    (fg-reset)))
+    (fg-set :default)
+    (bg-set :default)
+    (finish-output)))
