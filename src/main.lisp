@@ -39,7 +39,7 @@
 
 (defun main ()
   (ansi-esc:fmt (:fg :black :bg :green)
-                "Let's learn Common Lisp!~%")
+    "Let's learn Common Lisp!~%")
   (write-string "Hello, World!")
   (write-char #\Newline)
   (terpri)
@@ -104,7 +104,7 @@
   (defun hoho () (write-line "hoho"))
   (let ((haha-ptr (function haha))
         (hoho-ptr #'hoho))
-        ;         ^^^^^^ --> same as (function hoho)
+    ;         ^^^^^^ --> same as (function hoho)
     (funcall haha-ptr)
     (funcall hoho-ptr))
   (terpri)
@@ -183,7 +183,7 @@
   ;; (list a b c d) ;; <-- list evaluates items
   (ansi-esc:fmt (:fg :green) "< list >~%")
   (if (equal '(1 . (2 . (3 . (4)))) '(1 2 3 4))
-    (format t "'(1 . (2 . (3 . (4)))) == '(1 2 3 4)~%"))
+      (format t "'(1 . (2 . (3 . (4)))) == '(1 2 3 4)~%"))
   (let ((a '(1 2 3 4)))
     (format t "a = ~a~%" a)
     (format t "(first a) => ~a~%" (first a))
@@ -205,7 +205,8 @@
 
   ;; property list (plist)
   (ansi-esc:fmt (:fg :green) "< property list >~%")
-  (let ((person '(:name "Kate" :age 21)))
+  (let ((person (list :name "Kate"
+                      :age 21)))
     (format t "~a ~a~%" (getf person :name) (getf person :age)))
   (terpri)
 
@@ -237,7 +238,7 @@
                    (1 2 3 4 5)))
     (format t "grid = ~a~%" grid)
     (format t "grid[2][3] = ~a~%" (aref grid 2 3)))
-    ;                              ^^^^^^^^^^^^^ --> row major indexing
+  ;                              ^^^^^^^^^^^^^ --> row major indexing
   (terpri)
 
   ;; dotimes macro
@@ -245,7 +246,8 @@
   (dotimes (i 10)
     (format t "~a " i))
   (terpri)
-  (let ((res (dotimes (i 10 "return value") (format t "~a " i))))
+  (let ((res (dotimes (i 10 "return value")
+               (format t "~a " i))))
     (terpri)
     (format t "res = ~a~%" res))
   (terpri)
