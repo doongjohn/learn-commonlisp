@@ -53,8 +53,8 @@
 
   ;; scoped variable
   (ansi-esc:fmt (:fg :green) "< scoped variable >~%")
-  (let ((x 123)
-        (y 456))
+  (let ((x 123
+         (y 456)))
     (format t "x = ~a~%" x)
     (format t "y = ~a~%" y))
   (terpri)
@@ -104,7 +104,7 @@
   (defun hoho () (write-line "hoho"))
   (let ((haha-ptr (function haha))
         (hoho-ptr #'hoho))
-    ;         ^^^^^^ --> same as (function hoho)
+    ;             ^^^^^^ --> same as (function hoho)
     (funcall haha-ptr)
     (funcall hoho-ptr))
   (terpri)
@@ -238,7 +238,7 @@
                    (1 2 3 4 5)))
     (format t "grid = ~a~%" grid)
     (format t "grid[2][3] = ~a~%" (aref grid 2 3)))
-  ;                              ^^^^^^^^^^^^^ --> row major indexing
+  ;                                ^^^^^^^^^^^^^ --> row major indexing
   (terpri)
 
   ;; dotimes macro
