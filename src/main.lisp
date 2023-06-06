@@ -1,34 +1,13 @@
 ;;;; Learn Common Lisp
 
 ;;; TODO:
-;;; - learn equalp
-;;; - learn error handling
-;;;   https://gigamonkeys.com/book/beyond-exception-handling-conditions-and-restarts.html
 ;;; - learn defstruct
 ;;; - learn defclass
+;;; - learn error handling
+;;;   - https://gigamonkeys.com/book/beyond-exception-handling-conditions-and-restarts.html
 ;;; - learn type system
-;;;   https://lispcookbook.github.io/cl-cookbook/type.html
+;;;   - https://lispcookbook.github.io/cl-cookbook/type.html
 ;;; - learn macro
-
-;;; Tutorials
-;;; https://www.youtube.com/watch?v=LqBbGFMPcDI
-;;; https://cs.gmu.edu/~sean/lisp/LispTutorial.html
-;;; https://github.com/rabbibotton/clog/blob/main/LEARN.md
-;;; https://gigamonkeys.com/book
-
-;;; Comment style rules
-;;; https://stackoverflow.com/a/6365579
-;;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Comment-Tips.html
-
-;;; Libraries
-;;; - Concurrency: https://www.cliki.net/concurrency
-;;; - Static typing:
-;;;   - https://github.com/coalton-lang/coalton
-;;;   - https://lisp-journey.gitlab.io/blog/compile-time-type-checking-in-common-lisp
-;;; - Pattern matching: https://github.com/guicho271828/trivia
-;;; - Regular expression: https://github.com/telekons/one-more-re-nightmare
-;;; - Run external program: https://github.com/ruricolist/cmd
-;;; - HTTP client: https://github.com/fukamachi/dexador
 
 (require 'ansi-esc "src/ansi-esc.lisp")
 
