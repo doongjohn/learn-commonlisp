@@ -32,8 +32,8 @@
 
   ;; scoped variable
   (ansi-esc:fmt (:fg :green) "< scoped variable >~%")
-  (let ((x 123
-         (y 456)))
+  (let ((x 123)
+        (y 456))
     (format t "x = ~a~%" x)
     (format t "y = ~a~%" y))
   (terpri)
