@@ -141,9 +141,9 @@
   (terpri)
 
   ;; if else if ...
-  (cond ((y-or-n-p "stop?") (write-line "stopped at 1"))
-        ((y-or-n-p "stop?") (write-line "stopped at 2"))
-        ((y-or-n-p "stop?") (write-line "stopped at 3")))
+  (cond ((y-or-n-p "stop? (1)") (write-line "stopped at 1"))
+        ((y-or-n-p "stop? (2)") (write-line "stopped at 2"))
+        ((y-or-n-p "stop? (3)") (write-line "stopped at 3")))
   (terpri)
 
   ;; case
