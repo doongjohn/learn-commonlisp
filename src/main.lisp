@@ -1,19 +1,21 @@
 ;;;; Learn Common Lisp
-
 ;;; TODO:
-;;; - learn defstruct
-;;; - learn defclass
+;;; - learn asdf
+;;; - learn quicklisp
+;;; - learn defstruct & defclass
+;;; - learn macro
 ;;; - learn error handling
 ;;;   - https://gigamonkeys.com/book/beyond-exception-handling-conditions-and-restarts.html
 ;;; - learn type system
 ;;;   - https://lispcookbook.github.io/cl-cookbook/type.html
-;;; - learn macro
+;;;   - https://github.com/coalton-lang/coalton
 
 (require 'ansi-esc "src/ansi-esc.lisp")
 
 ;; global variable
 ;; https://stackoverflow.com/questions/8927741/whats-difference-between-defvar-defparameter-setf-and-setq
-(defparameter *global-var* "global var")
+(defvar *global-defvar* "defvar")
+(defparameter *global-defparameter* "defparameter")
 (defconstant +immutable-global-var+ "immutable")
 
 (defun main ()
@@ -24,9 +26,10 @@
   (terpri)
 
   (ansi-esc:fmt (:fg :green) "< global variable >~%")
-  (format t "*global-var* = ~a~%" *global-var*)
-  (setf *global-var* "mutable")
-  (format t "*global-var* = ~a~%" *global-var*)
+  ;; both defvar and defparameter are mutable variable
+  (format t "*global-defvar* = ~a~%" *global-defvar*)
+  (setf *global-defvar* "mutable")
+  (format t "*global-defvar* = ~a~%" *global-defvar*)
   (format t "+immutable-global-var+ = ~a~%" +immutable-global-var+)
   (terpri)
 
@@ -46,10 +49,10 @@
 
   ;; named function
   (ansi-esc:fmt (:fg :green) "< named function >~%")
-  (defun append-digit (a b)
+  (defun concat-digit (a b)
     ;; function body
     (+ (* a (expt 10 (1- (truncate (log b))))) b))
-  (format t "~a~%" (append-digit 12 34))
+  (format t "~a~%" (concat-digit 12 34))
   (terpri)
 
   ;; anonymous function (lambda)
@@ -158,8 +161,8 @@
   (terpri)
 
   ;; list
-  ;; '(a b c d) ;; <-- quoted list does not evaluate items
-  ;; (list a b c d) ;; <-- list evaluates items
+  ;; '(a b c d) ; <-- quoted list does not evaluate items
+  ;; (list a b c d) ; <-- list evaluate items
   (ansi-esc:fmt (:fg :green) "< list >~%")
   (if (equal '(1 . (2 . (3 . (4)))) '(1 2 3 4))
       (format t "'(1 . (2 . (3 . (4)))) == '(1 2 3 4)~%"))

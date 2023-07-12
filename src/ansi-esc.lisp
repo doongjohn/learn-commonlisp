@@ -6,7 +6,8 @@
    #:bg-set ; function
    #:fg-reset ; function
    #:bg-reset ; function
-   #:fmt)) ; macro
+   #:fmt ; macro
+  ))
 
 
 (in-package #:ansi-esc)
