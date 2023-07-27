@@ -9,7 +9,6 @@
    #:fmt ; macro
   ))
 
-
 (in-package #:ansi-esc)
 
 ;; https://en.wikipedia.org/wiki/ANSI_escape_code
