@@ -7,8 +7,6 @@
 ;;; - learn error handling
 ;;;   - https://gigamonkeys.com/book/beyond-exception-handling-conditions-and-restarts.html
 ;;; - learn type system
-;;;   - https://lispcookbook.github.io/cl-cookbook/type.html
-;;;   - https://github.com/coalton-lang/coalton
 
 (require 'ansi-esc "src/ansi-esc.lisp")
 
