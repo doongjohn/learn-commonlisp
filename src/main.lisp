@@ -13,9 +13,9 @@
 ;; global variable
 ;; https://stackoverflow.com/questions/8927741/whats-difference-between-defvar-defparameter-setf-and-setq
 (defvar *global-defvar* "defvar")
-(defvar *global-defvar* "defvar-new") ; <-- not possible to reassign
+(defvar *global-defvar* "defvar-new") ;; <-- not possible to reassign
 (defparameter *global-defparameter* "defparameter-old")
-(defparameter *global-defparameter* "defparameter") ; <-- possible to reassign
+(defparameter *global-defparameter* "defparameter") ;; <-- possible to reassign
 (defconstant +global-defconstant+ "immutable")
 
 (defun main ()
@@ -54,7 +54,7 @@
 
   ;; named function
   (ansi-esc:fmt (:fg :green) "< named function >~%")
-  (defun concat-digit (a b) ; <-- function parameter
+  (defun concat-digit (a b) ;; <-- function parameter
     ;; function body
     (+ (* a (expt 10 (1- (truncate (log b))))) b))
   (format t "~a~%" (concat-digit 12 34))
@@ -91,7 +91,7 @@
   (defun hoho () (write-line "hoho"))
   (let ((haha-ptr (function haha))
         (hoho-ptr #'hoho))
-    ;             ^^^^^^ --> same as (function hoho)
+    ;;            ^^^^^^ --> same as (function hoho)
     (funcall haha-ptr)
     (funcall hoho-ptr))
   (terpri)
@@ -117,12 +117,12 @@
   ;; format string
   (ansi-esc:fmt (:fg :green) "< format string >~%")
   (format t "1 + 2 = ~a~%" (+ 1 2))
-  ;                  ^^^^
-  ;                  │ └-> newline
-  ;                  └---> next argument
+  ;;                 ^^^^
+  ;;                 │ └-> newline
+  ;;                 └---> next argument
 
   (format t "~:(~a, ~a!~)~%" "hello" "world")
-  ;          ^^^^^^^^^^^^ --> anything between ~:( and ~) gets converted to title case
+  ;;         ^^^^^^^^^^^^ --> anything between ~:( and ~) gets converted to title case
 
   ;; number formatting
   (format t "~,2f~%" 0.3333) ;; 0.33
@@ -166,8 +166,8 @@
   (terpri)
 
   ;; list
-  ;; '(a b c d) ; <-- quoted list does not evaluate items
-  ;; (list a b c d) ; <-- list evaluate items
+  ;; '(a b c d) ;; <-- quoted list does not evaluate items
+  ;; (list a b c d) ;; <-- list evaluate items
   (ansi-esc:fmt (:fg :green) "< list >~%")
   (if (equal '(1 . (2 . (3 . (4)))) '(1 2 3 4))
       (format t "'(1 . (2 . (3 . (4)))) == '(1 2 3 4)~%"))
@@ -179,7 +179,7 @@
 
   ;; list index
   (format t "index 2 of '(a b c d) => ~a~%" (nth 2 '(a b c d)))
-  ;                                          ^^^^^ --> list index is zero based
+  ;;                                         ^^^^^ --> list index is zero based
   (terpri)
 
   ;; add item to list
@@ -225,7 +225,7 @@
                    (1 2 3 4 5)))
     (format t "grid = ~a~%" grid)
     (format t "grid[2][3] = ~a~%" (aref grid 2 3)))
-  ;                                ^^^^^^^^^^^^^ --> row major indexing
+  ;;                               ^^^^^^^^^^^^^ --> row major indexing
   (terpri)
 
   ;; dotimes macro
