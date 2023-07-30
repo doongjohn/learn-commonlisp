@@ -15,8 +15,10 @@
 ;; global variable
 ;; https://stackoverflow.com/questions/8927741/whats-difference-between-defvar-defparameter-setf-and-setq
 (defvar *global-defvar* "defvar")
-(defparameter *global-defparameter* "defparameter")
-(defconstant +immutable-global-var+ "immutable")
+(defvar *global-defvar* "defvar-new") ; <-- not possible to reassign
+(defparameter *global-defparameter* "defparameter-old")
+(defparameter *global-defparameter* "defparameter") ; <-- possible to reassign
+(defconstant +global-defconstant+ "immutable")
 
 (defun main ()
   (ansi-esc:fmt (:fg :black :bg :green)
@@ -25,12 +27,17 @@
   (write-char #\Newline)
   (terpri)
 
+  ;; global variable
   (ansi-esc:fmt (:fg :green) "< global variable >~%")
-  ;; both defvar and defparameter are mutable variable
   (format t "*global-defvar* = ~a~%" *global-defvar*)
-  (setf *global-defvar* "mutable")
+  (setf *global-defvar* "is mutable")
   (format t "*global-defvar* = ~a~%" *global-defvar*)
-  (format t "+immutable-global-var+ = ~a~%" +immutable-global-var+)
+
+  (format t "*global-defparameter* = ~a~%" *global-defparameter*)
+  (setf *global-defparameter* "is mutable")
+  (format t "*global-defparameter* = ~a~%" *global-defparameter*)
+
+  (format t "+global-defconstant+ = ~a~%" +global-defconstant+)
   (terpri)
 
   ;; scoped variable
@@ -49,7 +56,7 @@
 
   ;; named function
   (ansi-esc:fmt (:fg :green) "< named function >~%")
-  (defun concat-digit (a b)
+  (defun concat-digit (a b) ; <-- function parameter
     ;; function body
     (+ (* a (expt 10 (1- (truncate (log b))))) b))
   (format t "~a~%" (concat-digit 12 34))
