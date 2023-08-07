@@ -193,11 +193,24 @@
     (format t "~a~%" a))
   (terpri)
 
+  ;; association lists (alist)
+  ;; http://dnaeon.github.io/common-lisp-lookup-tables-alists-and-plists/
+
   ;; property list (plist)
   (ansi-esc:fmt (:fg :green) "< property list >~%")
   (let ((person (list :name "Kate"
                       :age 21)))
     (format t "~a ~a~%" (getf person :name) (getf person :age)))
+  (terpri)
+
+  ;; hash table
+  ;; https://cl-cookbook.sourceforge.net/hashes.html
+  (ansi-esc:fmt (:fg :green) "< hash table >~%")
+  (let ((table (make-hash-table)))
+    (setf (gethash 'a table) "hello")
+    (setf (gethash 'b table) 2/4)
+    (format t "~a~%" (gethash 'a table))
+    (format t "~a~%" (gethash 'b table)))
   (terpri)
 
   ;; vector
@@ -229,16 +242,6 @@
     (format t "grid = ~a~%" grid)
     (format t "grid[2][3] = ~a~%" (aref grid 2 3)))
   ;;                               ^^^^^^^^^^^^^ --> row major indexing
-  (terpri)
-
-  ;; hash table
-  ;; https://cl-cookbook.sourceforge.net/hashes.html
-  (ansi-esc:fmt (:fg :green) "< hash table >~%")
-  (let ((table (make-hash-table)))
-    (setf (gethash 'a table) "hello")
-    (setf (gethash 'b table) 2/4)
-    (format t "~a~%" (gethash 'a table))
-    (format t "~a~%" (gethash 'b table)))
   (terpri)
 
   ;; dotimes macro
