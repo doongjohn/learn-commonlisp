@@ -96,6 +96,9 @@
     (funcall hoho-ptr))
   (terpri)
 
+  ;; funcall & apply
+  ;; https://stackoverflow.com/a/3863216
+
   ;; simple addition & subtraction
   (ansi-esc:fmt (:fg :green) "< addition & subtraction >~%")
   (format t "(+ 1 2) => ~a~%" (+ 1 2)) ;; 3
