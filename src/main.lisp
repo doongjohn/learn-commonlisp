@@ -228,6 +228,16 @@
   ;;                               ^^^^^^^^^^^^^ --> row major indexing
   (terpri)
 
+  ;; hash table
+  ;; https://cl-cookbook.sourceforge.net/hashes.html
+  (ansi-esc:fmt (:fg :green) "< hash table >~%")
+  (let ((table (make-hash-table)))
+    (setf (gethash 'a table) "hello")
+    (setf (gethash 'b table) 2/4)
+    (format t "~a~%" (gethash 'a table))
+    (format t "~a~%" (gethash 'b table)))
+  (terpri)
+
   ;; dotimes macro
   (ansi-esc:fmt (:fg :green) "< dotimes macro >~%")
   (dotimes (i 10)
