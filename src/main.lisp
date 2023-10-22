@@ -2,6 +2,12 @@
 ;;; - learn alexandria (https://gitlab.common-lisp.net/alexandria/alexandria)
 ;;; - learn error handling (https://gigamonkeys.com/book/beyond-exception-handling-conditions-and-restarts.html)
 
+;;; When you use (defpackage utils ...), you could have accidentally interned the symbol utils in the current package. This is kind of bad, as it makes things more messy than they could be.
+;;; When you use (defpackage :utils ...) , you still are interning (maybe) a symbol with this name, but this time into the keyword package. It makes it a bit more manageable, but still not very great.
+;;; When you use (defpackage #:utils ...) you are doing great - it does create a new symbol - but it is uninterned, and thus can be collected by the garbage collector when needed.
+;;; When you use (defpackage "UTILS" ...) (note the uppercase - in first three cases you had symbols as names, and they are read in uppercase by default) you are doing even better - not extra symbol is created. But it does makes it less readable (due to being uppercase) .
+;;; https://discord.com/channels/297478281278652417/569524818991644692/1165778549911867463
+
 (defpackage #:main
   (:use #:cl)
   (:export #:main))
@@ -11,9 +17,9 @@
 ;; global variable
 ;; https://stackoverflow.com/questions/8927741/whats-difference-between-defvar-defparameter-setf-and-setq
 (defvar *global-defvar* "defvar")
-(defvar *global-defvar* "defvar-new") ;; <-- not possible to reassign
+(defvar *global-defvar* "defvar-new") ;; <-- not possible to redefine
 (defparameter *global-defparameter* "defparameter-old")
-(defparameter *global-defparameter* "defparameter") ;; <-- possible to reassign
+(defparameter *global-defparameter* "defparameter") ;; <-- possible to redefine
 
 (defun main ()
   (ansi-esc:fmt (:fg :black :bg :green) "Let's learn Common Lisp!~%")
