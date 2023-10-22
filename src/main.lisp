@@ -1,12 +1,12 @@
+;;; - learn type system
+;;; - learn alexandria (https://gitlab.common-lisp.net/alexandria/alexandria)
+;;; - learn error handling (https://gigamonkeys.com/book/beyond-exception-handling-conditions-and-restarts.html)
+
 (defpackage #:main
   (:use #:cl)
   (:export #:main))
 
 (in-package #:main)
-
-;;; - learn type system
-;;; - learn error handling
-;;;   - https://gigamonkeys.com/book/beyond-exception-handling-conditions-and-restarts.html
 
 ;; global variable
 ;; https://stackoverflow.com/questions/8927741/whats-difference-between-defvar-defparameter-setf-and-setq
