@@ -1,14 +1,12 @@
-;;;; Learn Common Lisp
-;;; TODO:
-;;; - learn asdf
-;;; - learn quicklisp
-;;; - learn defstruct & defclass
-;;; - learn macro
+(defpackage #:main
+  (:use #:cl)
+  (:export #:main))
+
+(in-package #:main)
+
+;;; - learn type system
 ;;; - learn error handling
 ;;;   - https://gigamonkeys.com/book/beyond-exception-handling-conditions-and-restarts.html
-;;; - learn type system
-
-(require 'ansi-esc "src/ansi-esc.lisp")
 
 ;; global variable
 ;; https://stackoverflow.com/questions/8927741/whats-difference-between-defvar-defparameter-setf-and-setq
@@ -16,11 +14,9 @@
 (defvar *global-defvar* "defvar-new") ;; <-- not possible to reassign
 (defparameter *global-defparameter* "defparameter-old")
 (defparameter *global-defparameter* "defparameter") ;; <-- possible to reassign
-(defconstant +global-defconstant+ "immutable")
 
 (defun main ()
-  (ansi-esc:fmt (:fg :black :bg :green)
-    "Let's learn Common Lisp!~%")
+  (ansi-esc:fmt (:fg :black :bg :green) "Let's learn Common Lisp!~%")
   (write-string "Hello, World!")
   (write-char #\Newline)
   (terpri)
@@ -34,9 +30,6 @@
   (format t "*global-defparameter* = ~a~%" *global-defparameter*)
   (setf *global-defparameter* "is mutable")
   (format t "*global-defparameter* = ~a~%" *global-defparameter*)
-
-  (format t "+global-defconstant+ = ~a~%" +global-defconstant+)
-  (terpri)
 
   ;; scoped variable
   (ansi-esc:fmt (:fg :green) "< scoped variable >~%")
@@ -144,7 +137,7 @@
       (format t "Hello, ~a~%" input)
       (terpri))
     (sb-sys:interactive-interrupt () ;; <-- ctrl-c
-                                  (exit)))
+                                  (uiop:quit)))
 
   ;; read char
   (ansi-esc:fmt (:fg :green) "< read char >~%")
@@ -307,4 +300,4 @@
         :finally (format t "a = ~a, b = ~a~%" a b))
   (terpri)
 
-  (exit))
+  (uiop:quit))
