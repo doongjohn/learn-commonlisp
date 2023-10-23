@@ -34,11 +34,11 @@
   ;; global variable
   (ansi-esc:fmt (:fg :green) "< global variable >~%")
   (format t "*global-defvar* = ~a~%" *global-defvar*)
-  (setf *global-defvar* "is mutable but should not mutate variables with the *...* naming convention")
+  (setf *global-defvar* "is mutable but should not mutate variables with the *...* or +...+ naming convention")
   (format t "*global-defvar* = ~a~%" *global-defvar*)
   (terpri)
   (format t "*global-defparameter* = ~a~%" *global-defparameter*)
-  (setf *global-defparameter* "is mutable but should not mutate variables with the *...* naming convention")
+  (setf *global-defparameter* "is mutable but should not mutate variables with the *...* or +...+ naming convention")
   (format t "*global-defparameter* = ~a~%" *global-defparameter*)
   (terpri)
 
