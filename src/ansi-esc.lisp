@@ -3,12 +3,11 @@
 
 (defpackage #:ansi-esc
   (:use #:cl)
-  (:export
-   #:fg-set
-   #:bg-set
-   #:fg-reset
-   #:bg-reset
-   #:fmt))
+  (:export #:fg-set
+           #:bg-set
+           #:fg-reset
+           #:bg-reset
+           #:fmt))
 
 (in-package #:ansi-esc)
 

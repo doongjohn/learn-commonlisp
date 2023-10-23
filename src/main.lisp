@@ -1,6 +1,9 @@
 ;;; type system
 ;;; alexandria (https://gitlab.common-lisp.net/alexandria/alexandria)
 ;;; error handling (https://gigamonkeys.com/book/beyond-exception-handling-conditions-and-restarts.html)
+;;; Conditions: http://www.lispworks.com/documentation/HyperSpec/Body/09_.htm
+;;; error: http://www.lispworks.com/documentation/HyperSpec/Body/e_error.htm
+
 ;;; naming convention (https://www.cliki.net/naming+conventions)
 
 ;;; When you use (defpackage utils ...), you could have accidentally interned the symbol utils in the current package. This is kind of bad, as it makes things more messy than they could be.
@@ -65,7 +68,7 @@
     (block blk
       (write-line "hi")
       (return-from blk "block result")))
-  ;;   ^^^^^^^^^^^^^^^ <-- break out of block `blk`
+  ;;   ^^^^^^^^^^^^^^^ <-- break out of the block `blk`
   (terpri)
 
   ;; named function
@@ -155,18 +158,18 @@
   (ansi-esc:fmt (:fg :green) "< read line >~%")
   (format t "What's your name? ")
   (finish-output) ;; <-- https://stackoverflow.com/a/40985570
-  (handler-case ;; <-- https://lispcookbook.github.io/cl-cookbook/error_handling.html
-    (let ((input (read-line)))
-      (format t "Hello, ~a~%" input)
-      (terpri))
+    (handler-case ;; <-- https://lispcookbook.github.io/cl-cookbook/error_handling.html
+      (let ((input (read-line)))
+        (format t "Hello, ~a~%" input)
+        (terpri))
 
     ;; handle ctrl-c
     (#+sbcl sb-sys:interactive-interrupt
-            #+ccl ccl:interrupt-signal-condition
-            #+clisp system::simple-interrupt-condition
-            #+ecl ext:interactive-interrupt
-            #+allegro excl:interrupt-signal
-            () (uiop:quit)))
+     #+ccl ccl:interrupt-signal-condition
+     #+clisp system::simple-interrupt-condition
+     #+ecl ext:interactive-interrupt
+     #+allegro excl:interrupt-signal
+     () (uiop:quit)))
 
   ;; read char
   (ansi-esc:fmt (:fg :green) "< read char >~%")
@@ -220,8 +223,7 @@
 
   ;; property list (plist)
   (ansi-esc:fmt (:fg :green) "< property list >~%")
-  (let ((person (list :name "Kate"
-                      :age 21)))
+  (let ((person (list :name "Kate" :age 21)))
     (format t "~a ~a~%" (getf person :name) (getf person :age)))
   (terpri)
 
