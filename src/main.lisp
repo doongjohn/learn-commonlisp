@@ -1,6 +1,7 @@
-;;; - learn type system
-;;; - learn alexandria (https://gitlab.common-lisp.net/alexandria/alexandria)
-;;; - learn error handling (https://gigamonkeys.com/book/beyond-exception-handling-conditions-and-restarts.html)
+;;; type system
+;;; alexandria (https://gitlab.common-lisp.net/alexandria/alexandria)
+;;; error handling (https://gigamonkeys.com/book/beyond-exception-handling-conditions-and-restarts.html)
+;;; naming convention (https://www.cliki.net/naming+conventions)
 
 ;;; When you use (defpackage utils ...), you could have accidentally interned the symbol utils in the current package. This is kind of bad, as it makes things more messy than they could be.
 ;;; When you use (defpackage :utils ...) , you still are interning (maybe) a symbol with this name, but this time into the keyword package. It makes it a bit more manageable, but still not very great.
@@ -49,6 +50,22 @@
          (y (+ x 10)))
     (format t "x = ~a~%" x)
     (format t "y = ~a~%" y))
+  (terpri)
+
+  (ansi-esc:fmt (:fg :green) "< progn >~%")
+  (write-line
+    (progn
+     (write-line "hi")
+     (write-line "nice to meet you")
+     "progn result"))
+  (terpri)
+
+  (ansi-esc:fmt (:fg :green) "< block >~%")
+  (write-line
+    (block blk
+      (write-line "hi")
+      (return-from blk "block result")))
+  ;;   ^^^^^^^^^^^^^^^ <-- break out of block `blk`
   (terpri)
 
   ;; named function
@@ -142,8 +159,14 @@
     (let ((input (read-line)))
       (format t "Hello, ~a~%" input)
       (terpri))
-    (sb-sys:interactive-interrupt () ;; <-- ctrl-c
-                                  (uiop:quit)))
+
+    ;; handle ctrl-c
+    (#+sbcl sb-sys:interactive-interrupt
+            #+ccl ccl:interrupt-signal-condition
+            #+clisp system::simple-interrupt-condition
+            #+ecl ext:interactive-interrupt
+            #+allegro excl:interrupt-signal
+            () (uiop:quit)))
 
   ;; read char
   (ansi-esc:fmt (:fg :green) "< read char >~%")
