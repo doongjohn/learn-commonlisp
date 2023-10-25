@@ -102,7 +102,7 @@
   (say-hello "동준")
   (terpri)
 
-  ;; optional named parameter with default value
+  ;; named optional parameter with default value
   (ansi-esc:fmt (:fg :green) "< optional named parameter with default value >~%")
   (defun say-wow (&key (name "John") (age 10))
     (format t "Wow, ~a ~a!~%" name age))
@@ -126,8 +126,6 @@
     (funcall haha-ptr)
     (funcall hoho-ptr))
   (terpri)
-
-
 
   ;; simple addition & subtraction
   (ansi-esc:fmt (:fg :green) "< addition & subtraction >~%")
