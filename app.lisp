@@ -1,11 +1,7 @@
-; (defparameter *cwd* (uiop:getcwd))
-; (push (merge-pathnames #P"src/" *cwd*) asdf:*central-registry*)
-
-(defparameter *asdf-system-search-paths*
-              '(#P"./src/"))
-
-(loop :for path :in *asdf-system-search-paths* :do
-  (when (not (position path asdf:*central-registry*))
-    (push path asdf:*central-registry*)))
+(let ((cwd (uiop:getcwd)))
+  (asdf:initialize-source-registry
+  `(:source-registry
+    (:directory ,(merge-pathnames #P"src/" cwd))
+    :inherit-configuration)))
 
 (asdf:load-system "main")
