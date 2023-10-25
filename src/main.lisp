@@ -1,22 +1,21 @@
-;;; type system
-;;; alexandria (https://gitlab.common-lisp.net/alexandria/alexandria)
-;;; error handling (https://gigamonkeys.com/book/beyond-exception-handling-conditions-and-restarts.html)
-;;; Conditions: http://www.lispworks.com/documentation/HyperSpec/Body/09_.htm
-;;; error: http://www.lispworks.com/documentation/HyperSpec/Body/e_error.htm
-
-;;; naming convention (https://www.cliki.net/naming+conventions)
-
-;;; When you use (defpackage utils ...), you could have accidentally interned the symbol utils in the current package. This is kind of bad, as it makes things more messy than they could be.
-;;; When you use (defpackage :utils ...) , you still are interning (maybe) a symbol with this name, but this time into the keyword package. It makes it a bit more manageable, but still not very great.
-;;; When you use (defpackage #:utils ...) you are doing great - it does create a new symbol - but it is uninterned, and thus can be collected by the garbage collector when needed.
-;;; When you use (defpackage "UTILS" ...) (note the uppercase - in first three cases you had symbols as names, and they are read in uppercase by default) you are doing even better - not extra symbol is created. But it does makes it less readable (due to being uppercase) .
-;;; https://discord.com/channels/297478281278652417/569524818991644692/1165778549911867463
-
 (defpackage #:main
   (:use #:cl)
   (:export #:main))
 
 (in-package #:main)
+
+;;; naming convention (https://www.cliki.net/naming+conventions)
+;;; alexandria (https://gitlab.common-lisp.net/alexandria/alexandria)
+;;; error handling (https://gigamonkeys.com/book/beyond-exception-handling-conditions-and-restarts.html)
+;;;   - Conditions (http://www.lispworks.com/documentation/HyperSpec/Body/09_.htm)
+;;;   - error (http://www.lispworks.com/documentation/HyperSpec/Body/e_error.htm)
+
+;;; defpackage
+;;; When you use (defpackage utils ...), you could have accidentally interned the symbol utils in the current package. This is kind of bad, as it makes things more messy than they could be.
+;;; When you use (defpackage :utils ...) , you still are interning (maybe) a symbol with this name, but this time into the keyword package. It makes it a bit more manageable, but still not very great.
+;;; When you use (defpackage #:utils ...) you are doing great - it does create a new symbol - but it is uninterned, and thus can be collected by the garbage collector when needed.
+;;; When you use (defpackage "UTILS" ...) (note the uppercase - in first three cases you had symbols as names, and they are read in uppercase by default) you are doing even better - not extra symbol is created. But it does makes it less readable (due to being uppercase) .
+;;; https://discord.com/channels/297478281278652417/569524818991644692/1165778549911867463
 
 ;; global variable
 ;; https://stackoverflow.com/questions/8927741/whats-difference-between-defvar-defparameter-setf-and-setq
@@ -24,6 +23,13 @@
 (defvar *global-defvar* "defvar-new") ;; <-- not possible to redefine
 (defparameter *global-defparameter* "defparameter-old")
 (defparameter *global-defparameter* "defparameter") ;; <-- possible to redefine
+
+;; typed function
+;; http://alhassy.com/TypedLisp.html
+(declaim (ftype (function (integer integer)) integer-add))
+(defun integer-add (x y)
+  (write-line "typed function")
+  (format t "x + y = ~a~%" (+ x y)))
 
 (defun main ()
   (ansi-esc:fmt (:fg :black :bg :green) "Let's learn Common Lisp!~%")
@@ -105,6 +111,9 @@
   (say-wow :name "동준" :age 24)
   (terpri)
 
+  ;; typed function
+  (integer-add 2 1)
+
   ;; function pointer
   (ansi-esc:fmt (:fg :green) "< function pointer >~%")
   (defun haha () (write-line "haha"))
@@ -112,12 +121,13 @@
   (let ((haha-ptr (function haha))
         (hoho-ptr #'hoho))
     ;;            ^^^^^^ --> same as (function hoho)
+    ;; funcall & apply
+    ;; https://stackoverflow.com/a/3863216
     (funcall haha-ptr)
     (funcall hoho-ptr))
   (terpri)
 
-  ;; funcall & apply
-  ;; https://stackoverflow.com/a/3863216
+
 
   ;; simple addition & subtraction
   (ansi-esc:fmt (:fg :green) "< addition & subtraction >~%")
