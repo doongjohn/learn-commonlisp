@@ -5,3 +5,11 @@
     :inherit-configuration)))
 
 (asdf:load-system "main")
+
+;; run project
+(defun run ()
+  (main:main))
+
+;; build executable
+(defun build ()
+  (sb-ext:save-lisp-and-die "app.exe" :toplevel 'main:main :executable t))
