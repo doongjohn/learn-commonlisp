@@ -24,6 +24,9 @@
 (defparameter *global-defparameter* "defparameter-old")
 (defparameter *global-defparameter* "defparameter") ;; <-- possible to redefine
 
+(defun print-title (str)
+  (ansi-esc:fmt t (:fg :green) "< ~a >~%" str))
+
 ;; typed function
 ;; http://alhassy.com/TypedLisp.html
 (declaim (ftype (function (integer integer)) integer-add))
@@ -32,13 +35,13 @@
     (format t "x + y = ~a~%" sum)))
 
 (defun main ()
-  (ansi-esc:fmt (:fg :black :bg :green) "Let's learn Common Lisp!~%")
+  (ansi-esc:fmt t (:fg :black :bg :green) "Let's learn Common Lisp!~%")
   (write-string "Hello, World!")
   (write-char #\Newline)
   (terpri)
 
   ;; global variable
-  (ansi-esc:fmt (:fg :green) "< global variable >~%")
+  (print-title "global variable")
   (format t "*global-defvar* = ~a~%" *global-defvar*)
   (setf *global-defvar* "is mutable but should not mutate variables with the *...* or +...+ naming convention")
   (format t "*global-defvar* = ~a~%" *global-defvar*)
@@ -49,7 +52,7 @@
   (terpri)
 
   ;; scoped variable
-  (ansi-esc:fmt (:fg :green) "< scoped variable >~%")
+  (print-title "scoped variable")
   (let ((x 123)
         (y 456))
     (format t "x = ~a~%" x)
@@ -62,7 +65,7 @@
     (format t "y = ~a~%" y))
   (terpri)
 
-  (ansi-esc:fmt (:fg :green) "< progn >~%")
+  (print-title "progn")
   (write-line
     (progn
      (write-line "hi")
@@ -70,7 +73,7 @@
      "progn result"))
   (terpri)
 
-  (ansi-esc:fmt (:fg :green) "< block >~%")
+  (print-title "block")
   (write-line
     (block blk
       (write-line "hi")
@@ -79,7 +82,7 @@
   (terpri)
 
   ;; named function
-  (ansi-esc:fmt (:fg :green) "< named function >~%")
+  (print-title "named function")
   (defun concat-digit (a b) ;; <-- function parameter
     ;; function body
     (+ (* a (expt 10 (1- (truncate (log b))))) b))
@@ -88,13 +91,13 @@
 
   ;; anonymous function (lambda)
   ;; https://stackoverflow.com/a/13213772
-  (ansi-esc:fmt (:fg :green) "< anonymous function >~%")
+  (print-title "anonymous function")
   (let ((fn #'(lambda () (format t "This is a lambda~%"))))
     (funcall fn))
   (terpri)
 
   ;; optional parameter with default value
-  (ansi-esc:fmt (:fg :green) "< optional parameter with default value >~%")
+  (print-title "optional parameter with default value")
   (defun say-hello (&optional (name "John"))
     (format t "Hello, ~a!~%" name))
 
@@ -103,7 +106,7 @@
   (terpri)
 
   ;; named optional parameter with default value
-  (ansi-esc:fmt (:fg :green) "< optional named parameter with default value >~%")
+  (print-title "optional named parameter with default value")
   (defun say-wow (&key (name "John") (age 10))
     (format t "Wow, ~a ~a!~%" name age))
 
@@ -112,7 +115,7 @@
   (terpri)
 
   ;; typed function
-  (ansi-esc:fmt (:fg :green) "< typed function >~%")
+  (print-title "typed function")
   (integer-add 2 1)
   ;; (integer-add #\a 1)
   ;; ^^^^^^^^^^^^^^^^^^^
@@ -123,7 +126,7 @@
   (terpri)
 
   ;; function pointer
-  (ansi-esc:fmt (:fg :green) "< function pointer >~%")
+  (print-title "function pointer")
   (defun haha () (write-line "haha"))
   (defun hoho () (write-line "hoho"))
   (let ((haha-ptr (function haha))
@@ -136,7 +139,7 @@
   (terpri)
 
   ;; simple addition & subtraction
-  (ansi-esc:fmt (:fg :green) "< addition & subtraction >~%")
+  (print-title "addition & subtraction")
   (format t "(+ 1 2) => ~a~%" (+ 1 2)) ;; 3
   (format t "(+ 1 2 3) => ~a~%" (+ 1 2 3)) ;; 6
   (format t "(1+ 3) => ~a~%" (1+ 3)) ;; 4
@@ -148,13 +151,13 @@
   (terpri)
 
   ;; rational
-  (ansi-esc:fmt (:fg :green) "< rational >~%")
+  (print-title "rational")
   (format t "~a~%" (/ 10 (/ 3 2))) ;; 20/3
   (format t "~a~%" (/ 10 (/ 2 3))) ;; 15
   (terpri)
 
   ;; format string
-  (ansi-esc:fmt (:fg :green) "< format string >~%")
+  (print-title "format string")
   (format t "1 + 2 = ~a~%" (+ 1 2))
   ;;                 ^^^^
   ;;                 │ └-> newline
@@ -172,7 +175,7 @@
   (terpri)
 
   ;; read line
-  (ansi-esc:fmt (:fg :green) "< read line >~%")
+  (print-title "read line")
   (format t "What's your name? ")
   (finish-output) ;; <-- https://stackoverflow.com/a/40985570
     (handler-case ;; <-- https://lispcookbook.github.io/cl-cookbook/error_handling.html
@@ -189,7 +192,7 @@
      () (uiop:quit)))
 
   ;; read char
-  (ansi-esc:fmt (:fg :green) "< read char >~%")
+  (print-title "read char")
   (format t "char: ~a~%" (read-char))
   (terpri)
 
@@ -203,7 +206,7 @@
   ;; http://www.lispworks.com/documentation/HyperSpec/Body/m_case_.htm
 
   ;; cons cell
-  (ansi-esc:fmt (:fg :green) "< cons cell >~%")
+  (print-title "cons cell")
   (let ((a '(1 . 2)))
     (format t "a = ~a~%" a)
     (format t "(first a) => ~a~%" (first a))
@@ -213,7 +216,7 @@
   ;; list
   ;; '(a b c d) ;; <-- quoted list does not evaluate items
   ;; (list a b c d) ;; <-- list evaluate items
-  (ansi-esc:fmt (:fg :green) "< list >~%")
+  (print-title "list")
   (if (equal '(1 . (2 . (3 . (4)))) '(1 2 3 4))
       (format t "'(1 . (2 . (3 . (4)))) == '(1 2 3 4)~%"))
   (let ((a '(1 2 3 4)))
@@ -239,14 +242,14 @@
   ;; http://dnaeon.github.io/common-lisp-lookup-tables-alists-and-plists/
 
   ;; property list (plist)
-  (ansi-esc:fmt (:fg :green) "< property list >~%")
+  (print-title "property list")
   (let ((person (list :name "Kate" :age 21)))
     (format t "~a ~a~%" (getf person :name) (getf person :age)))
   (terpri)
 
   ;; hash table
   ;; https://cl-cookbook.sourceforge.net/hashes.html
-  (ansi-esc:fmt (:fg :green) "< hash table >~%")
+  (print-title "hash table")
   (let ((table (make-hash-table)))
     (setf (gethash 'a table) "hello")
     (setf (gethash 'b table) 2/4)
@@ -257,7 +260,7 @@
   ;; vector
   ;; https://gigamonkeys.com/book/collections.html
   ;; https://lispcookbook.github.io/cl-cookbook/arrays.html
-  (ansi-esc:fmt (:fg :green) "< vector >~%")
+  (print-title "vector")
   (let ((vec1 (make-array 5 :initial-element 0))
         (vec2 #(1 2 3)))
     (format t "vec1 length: ~a~%" (length vec1))
@@ -273,7 +276,7 @@
     (format t "~a~%" vec))
   (terpri)
 
-  (ansi-esc:fmt (:fg :green) "< multidimentional vector >~%")
+  (print-title "multidimentional vector")
   (let ((grid (make-array '(5 5))))
     (setf grid #2A((1 2 3 4 5)
                    (1 2 3 4 5)
@@ -286,7 +289,7 @@
   (terpri)
 
   ;; dotimes macro
-  (ansi-esc:fmt (:fg :green) "< dotimes macro >~%")
+  (print-title "dotimes macro")
   (dotimes (i 10)
     (format t "~a " i))
   (terpri)
@@ -297,13 +300,13 @@
   (terpri)
 
   ;; dolist macro
-  (ansi-esc:fmt (:fg :green) "< dolist macro >~%")
+  (print-title "dolist macro")
   (dolist (item '("hi" "yo" "cool"))
     (format t "~a~%" item))
   (terpri)
 
   ;; do macro
-  (ansi-esc:fmt (:fg :green) "< do macro >~%")
+  (print-title "do macro")
   (do ((i 0 (1+ i))
        (j 0 (+ j 2)))
       ((= i 3))
@@ -313,7 +316,7 @@
   ;; loop macro
   ;; https://cl-cookbook.sourceforge.net/loop.html
   ;; https://lispcookbook.github.io/cl-cookbook/iteration.html
-  (ansi-esc:fmt (:fg :green) "< loop macro >~%")
+  (print-title "loop macro")
   (defun print-repeat (n str)
     (loop :repeat n :do (format t "~a~%" str)))
 

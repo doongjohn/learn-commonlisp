@@ -35,11 +35,12 @@
   (bg-set :default)
   (finish-output))
 
-(defmacro fmt ((&key (fg :default) (bg :default)) fmt-string &rest args)
+(defmacro fmt (destination (&key (fg :default) (bg :default)) control-string &rest args)
   `(progn
     (fg-set ,fg)
     (bg-set ,bg)
-    (apply #'format t ,fmt-string ,args)
+    (format ,destination ,control-string ,@args) ;; ,@ is a comma-splice operator it's similar
+    ;;                                              to the splat operator in other languages
     (fg-set :default)
     (bg-set :default)
     (finish-output)))
