@@ -8,6 +8,7 @@
 ;;; error handling (https://gigamonkeys.com/book/beyond-exception-handling-conditions-and-restarts.html)
 ;;;   - Conditions (http://www.lispworks.com/documentation/HyperSpec/Body/09_.htm)
 ;;;   - error (http://www.lispworks.com/documentation/HyperSpec/Body/e_error.htm)
+;;;   - https://www.reddit.com/r/ProgrammingLanguages/comments/drr3ri/comment/f6kn8a5/?utm_source=share&utm_medium=web2x&context=3
 ;;; alexandria (https://gitlab.common-lisp.net/alexandria/alexandria)
 
 ;;; defpackage naming
